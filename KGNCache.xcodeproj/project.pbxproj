@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		831F0CD11BCCF26E00527AB8 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F0CCF1BCCF26E00527AB8 /* Cache.swift */; settings = {ASSET_TAGS = (); }; };
+		834F2C391BCCFE7A008FEB5F /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 834F2C381BCCFE7A008FEB5F /* CryptoSwift.framework */; settings = {ASSET_TAGS = (); }; };
 		83601E701BCCD765005B4AC3 /* KGNCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 83601E6F1BCCD765005B4AC3 /* KGNCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		83601E771BCCD765005B4AC3 /* KGNCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83601E6C1BCCD765005B4AC3 /* KGNCache.framework */; settings = {ASSET_TAGS = (); }; };
 		83601E7C1BCCD765005B4AC3 /* KGNCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83601E7B1BCCD765005B4AC3 /* KGNCacheTests.swift */; };
@@ -24,8 +25,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		830D1C891BCCF84C0014CA43 /* module.map */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
 		831F0CCF1BCCF26E00527AB8 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
+		834F2C381BCCFE7A008FEB5F /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
 		83601E6C1BCCD765005B4AC3 /* KGNCache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KGNCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		83601E6F1BCCD765005B4AC3 /* KGNCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGNCache.h; sourceTree = "<group>"; };
 		83601E711BCCD765005B4AC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -39,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				834F2C391BCCFE7A008FEB5F /* CryptoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,17 +55,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		830D1C881BCCF84C0014CA43 /* CommonCrypto */ = {
-			isa = PBXGroup;
-			children = (
-				830D1C891BCCF84C0014CA43 /* module.map */,
-			);
-			path = CommonCrypto;
-			sourceTree = "<group>";
-		};
 		83601E621BCCD765005B4AC3 = {
 			isa = PBXGroup;
 			children = (
+				834F2C381BCCFE7A008FEB5F /* CryptoSwift.framework */,
 				83601E6E1BCCD765005B4AC3 /* Source */,
 				83601E7A1BCCD765005B4AC3 /* Tests */,
 				83601E6D1BCCD765005B4AC3 /* Products */,
@@ -84,7 +79,6 @@
 			children = (
 				831F0CCF1BCCF26E00527AB8 /* Cache.swift */,
 				83601E6F1BCCD765005B4AC3 /* KGNCache.h */,
-				830D1C881BCCF84C0014CA43 /* CommonCrypto */,
 				83601E711BCCD765005B4AC3 /* Info.plist */,
 			);
 			path = Source;
@@ -327,6 +321,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -334,7 +332,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidkeegan.KGNCache;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = Source/CommonCrypto;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -347,6 +344,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -354,7 +355,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidkeegan.KGNCache;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = Source/CommonCrypto;
 			};
 			name = Release;
 		};

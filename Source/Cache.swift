@@ -7,17 +7,19 @@
 //
 
 import UIKit
-import CommonCrypto
+import CryptoSwift
 
 private let diskQueue = dispatch_queue_create("com.davidkeegan.KGNCache.disk", DISPATCH_QUEUE_SERIAL)
 
 extension String {
-    func sha1() -> String {
-        let data = self.dataUsingEncoding(NSUTF8StringEncoding)!
-        var digest = [UInt8](count:Int(CC_SHA1_DIGEST_LENGTH), repeatedValue: 0)
-        CC_SHA1(data.bytes, CC_LONG(data.length), &digest)
-        let hexBytes = digest.map { String(format: "%02hhx", $0) }
-        return hexBytes.joinWithSeparator("")
+    func sha1() -> String? {
+        guard let data = self.dataUsingEncoding(NSUTF8StringEncoding) else {
+            return nil
+        }
+        guard let hash = Hash.md5(data).calculate() else {
+            return nil
+        }
+        return hash.toHexString()
     }
 }
 
@@ -73,6 +75,7 @@ private class CacheObject: NSObject, NSCoding {
 
 public enum CacheError: ErrorType {
     case NoCacheDirectory
+    case UnableToHashKey
 }
 
 public class Cache {
@@ -85,10 +88,12 @@ public class Cache {
         guard let cacheDirectory = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first else {
             throw CacheError.NoCacheDirectory
         }
+
         let cachePath = "\(cacheDirectory)/\(self.cacheName)"
         if create && !NSFileManager().fileExistsAtPath(cachePath) {
             try NSFileManager().createDirectoryAtPath(cachePath, withIntermediateDirectories: true, attributes: nil)
         }
+
         return cachePath
     }
 
@@ -112,7 +117,9 @@ public class Cache {
     }
 
     public func objectForKey(key: String, callback: (object: AnyObject?) -> Void) throws {
-        let keyHash = key.sha1()
+        guard let keyHash = key.sha1() else {
+            throw CacheError.UnableToHashKey
+        }
 
         if let cacheObject = self.memoryCache.objectForKey(keyHash) as? CacheObject {
             callback(object: self.objectFromCacheObject(cacheObject))
@@ -136,7 +143,10 @@ public class Cache {
     }
 
     public func setObject(object: AnyObject, forKey key: String, expires: NSDateComponents? = nil) throws {
-        let keyHash = key.sha1()
+        guard let keyHash = key.sha1() else {
+            throw CacheError.UnableToHashKey
+        }
+
         let cacheObject = CacheObject(key: key, object: object, expires: expires)
 
         self.memoryCache.setObject(cacheObject, forKey: keyHash)
@@ -150,7 +160,10 @@ public class Cache {
     }
 
     public func removeObjectForKey(key: String) throws {
-        let keyHash = key.sha1()
+        guard let keyHash = key.sha1() else {
+            throw CacheError.UnableToHashKey
+        }
+
         self.memoryCache.removeObjectForKey(keyHash)
 
         let cacheDirectory = try self.cacheDirectory()
