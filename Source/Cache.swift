@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CommonCrypto
 
 private let diskQueue = dispatch_queue_create("com.davidkeegan.KGNCache.disk", DISPATCH_QUEUE_SERIAL)
 
