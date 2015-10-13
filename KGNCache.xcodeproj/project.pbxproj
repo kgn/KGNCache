@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		831F0CD11BCCF26E00527AB8 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F0CCF1BCCF26E00527AB8 /* Cache.swift */; settings = {ASSET_TAGS = (); }; };
-		834F2C391BCCFE7A008FEB5F /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 834F2C381BCCFE7A008FEB5F /* CryptoSwift.framework */; settings = {ASSET_TAGS = (); }; };
+		831F0CD11BCCF26E00527AB8 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F0CCF1BCCF26E00527AB8 /* Cache.swift */; };
 		83601E701BCCD765005B4AC3 /* KGNCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 83601E6F1BCCD765005B4AC3 /* KGNCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		83601E771BCCD765005B4AC3 /* KGNCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83601E6C1BCCD765005B4AC3 /* KGNCache.framework */; settings = {ASSET_TAGS = (); }; };
+		83601E771BCCD765005B4AC3 /* KGNCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83601E6C1BCCD765005B4AC3 /* KGNCache.framework */; };
 		83601E7C1BCCD765005B4AC3 /* KGNCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83601E7B1BCCD765005B4AC3 /* KGNCacheTests.swift */; };
+		8365C3071BCD05CA00F34098 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8365C3061BCD05CA00F34098 /* CryptoSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,13 +26,13 @@
 
 /* Begin PBXFileReference section */
 		831F0CCF1BCCF26E00527AB8 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
-		834F2C381BCCFE7A008FEB5F /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
 		83601E6C1BCCD765005B4AC3 /* KGNCache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KGNCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		83601E6F1BCCD765005B4AC3 /* KGNCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGNCache.h; sourceTree = "<group>"; };
 		83601E711BCCD765005B4AC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83601E761BCCD765005B4AC3 /* KGNCacheTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KGNCacheTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		83601E7B1BCCD765005B4AC3 /* KGNCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KGNCacheTests.swift; sourceTree = "<group>"; };
 		83601E7D1BCCD765005B4AC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8365C3061BCD05CA00F34098 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,7 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				834F2C391BCCFE7A008FEB5F /* CryptoSwift.framework in Frameworks */,
+				8365C3071BCD05CA00F34098 /* CryptoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,7 +58,7 @@
 		83601E621BCCD765005B4AC3 = {
 			isa = PBXGroup;
 			children = (
-				834F2C381BCCFE7A008FEB5F /* CryptoSwift.framework */,
+				8365C3061BCD05CA00F34098 /* CryptoSwift.framework */,
 				83601E6E1BCCD765005B4AC3 /* Source */,
 				83601E7A1BCCD765005B4AC3 /* Tests */,
 				83601E6D1BCCD765005B4AC3 /* Products */,
