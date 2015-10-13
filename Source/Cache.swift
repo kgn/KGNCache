@@ -70,11 +70,11 @@ private class CacheObject: NSObject, NSCoding {
     }
 }
 
-enum CacheError: ErrorType {
+public enum CacheError: ErrorType {
     case NoCacheDirectory
 }
 
-class Cache {
+public class Cache {
 
     var cacheName: String
 
@@ -91,7 +91,7 @@ class Cache {
         return cachePath
     }
 
-    init(named: String? = nil) {
+    public init(named: String? = nil) {
         var cacheName = NSBundle.mainBundle().bundleIdentifier
         if named != nil {
             cacheName = "\(cacheName!).\(named!)"
@@ -99,7 +99,7 @@ class Cache {
         self.cacheName = cacheName!
     }
 
-    func setup() throws {
+    public func setup() throws {
         try self.cacheDirectory(true)
     }
 
@@ -110,7 +110,7 @@ class Cache {
         return cacheObject?.object
     }
 
-    func objectForKey(key: String, callback: (object: AnyObject?) -> Void) throws {
+    public func objectForKey(key: String, callback: (object: AnyObject?) -> Void) throws {
         let keyHash = key.sha1()
 
         if let cacheObject = self.memoryCache.objectForKey(keyHash) as? CacheObject {
@@ -134,7 +134,7 @@ class Cache {
         }
     }
 
-    func setObject(object: AnyObject, forKey key: String, expires: NSDateComponents? = nil) throws {
+    public func setObject(object: AnyObject, forKey key: String, expires: NSDateComponents? = nil) throws {
         let keyHash = key.sha1()
         let cacheObject = CacheObject(key: key, object: object, expires: expires)
 
@@ -148,7 +148,7 @@ class Cache {
         })
     }
 
-    func removeObjectForKey(key: String) throws {
+    public func removeObjectForKey(key: String) throws {
         let keyHash = key.sha1()
         self.memoryCache.removeObjectForKey(keyHash)
 
@@ -157,7 +157,7 @@ class Cache {
         try NSFileManager().removeItemAtPath(cacheObjectPath)
     }
 
-    func clearCache() throws {
+    public func clearCache() throws {
         self.memoryCache.removeAllObjects()
         try NSFileManager().removeItemAtPath(self.cacheDirectory())
         try self.cacheDirectory(true)

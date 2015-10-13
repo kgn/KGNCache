@@ -75,8 +75,8 @@
 		83601E6E1BCCD765005B4AC3 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				831F0CCE1BCCF26E00527AB8 /* Cache-Bridging-Header.h */,
 				831F0CCF1BCCF26E00527AB8 /* Cache.swift */,
+				831F0CCE1BCCF26E00527AB8 /* Cache-Bridging-Header.h */,
 				83601E6F1BCCD765005B4AC3 /* KGNCache.h */,
 				83601E711BCCD765005B4AC3 /* Info.plist */,
 			);
@@ -328,6 +328,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidkeegan.KGNCache;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Source/Cache-Bridging-Header.h\n";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -347,6 +348,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidkeegan.KGNCache;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Source/Cache-Bridging-Header.h\n";
 			};
 			name = Release;
 		};
