@@ -11,18 +11,6 @@ import CryptoSwift
 
 private let diskQueue = dispatch_queue_create("com.davidkeegan.KGNCache.disk", DISPATCH_QUEUE_SERIAL)
 
-extension String {
-    func sha1() -> String? {
-        guard let data = self.dataUsingEncoding(NSUTF8StringEncoding) else {
-            return nil
-        }
-        guard let hash = Hash.md5(data).calculate() else {
-            return nil
-        }
-        return hash.toHexString()
-    }
-}
-
 private class CacheObject: NSObject, NSCoding {
     var key: String!
     var object: AnyObject!
@@ -75,7 +63,6 @@ private class CacheObject: NSObject, NSCoding {
 
 public enum CacheError: ErrorType {
     case NoCacheDirectory
-    case UnableToHashKey
 }
 
 public class Cache {
@@ -117,10 +104,7 @@ public class Cache {
     }
 
     public func objectForKey(key: String, callback: (object: AnyObject?) -> Void) throws {
-        guard let keyHash = key.sha1() else {
-            throw CacheError.UnableToHashKey
-        }
-
+        let keyHash = key.sha1()
         if let cacheObject = self.memoryCache.objectForKey(keyHash) as? CacheObject {
             callback(object: self.objectFromCacheObject(cacheObject))
             return
@@ -143,10 +127,7 @@ public class Cache {
     }
 
     public func setObject(object: AnyObject, forKey key: String, expires: NSDateComponents? = nil) throws {
-        guard let keyHash = key.sha1() else {
-            throw CacheError.UnableToHashKey
-        }
-
+        let keyHash = key.sha1()
         let cacheObject = CacheObject(key: key, object: object, expires: expires)
 
         self.memoryCache.setObject(cacheObject, forKey: keyHash)
@@ -160,10 +141,7 @@ public class Cache {
     }
 
     public func removeObjectForKey(key: String) throws {
-        guard let keyHash = key.sha1() else {
-            throw CacheError.UnableToHashKey
-        }
-
+        let keyHash = key.sha1()
         self.memoryCache.removeObjectForKey(keyHash)
 
         let cacheDirectory = try self.cacheDirectory()
