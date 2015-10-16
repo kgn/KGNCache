@@ -7,3 +7,10 @@
 [![Build Status](https://travis-ci.org/kgn/KGNCache.svg)](https://travis-ci.org/kgn/KGNCache)
 [![Twitter](https://img.shields.io/badge/Twitter-@iamkgn-55ACEE.svg)](http://twitter.com/iamkgn)
 
+TODO:
+- [X] Badges
+- [ ] Tests
+- [ ] Description
+- [ ] Documentation
+- [ ] Example App
+
