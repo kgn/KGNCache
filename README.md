@@ -33,9 +33,9 @@ pod 'KGNCache'
 
 TODO:
 - [ ] Travis ([#4961](https://github.com/travis-ci/travis-ci/issues/4961)) ([#4962](https://github.com/travis-ci/travis-ci/issues/4962))
-- [X] Badges
+- [ ] Badges (Create release)
 - [ ] Tests (Running into `Library not loaded` issues)
 - [X] Carthage
 - [ ] CocoaPods (Just need to publish)
 - [ ] Description (Need code examples)
-- [ ] Documentation
+- [ ] Documentation (Add to code, confirm it’s working)
