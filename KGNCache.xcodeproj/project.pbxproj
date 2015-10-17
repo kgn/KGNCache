@@ -12,6 +12,7 @@
 		83601E771BCCD765005B4AC3 /* KGNCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83601E6C1BCCD765005B4AC3 /* KGNCache.framework */; };
 		83601E7C1BCCD765005B4AC3 /* KGNCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83601E7B1BCCD765005B4AC3 /* KGNCacheTests.swift */; };
 		8365C3071BCD05CA00F34098 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8365C3061BCD05CA00F34098 /* CryptoSwift.framework */; };
+		83F4F1181BD1D7BF0039C7DF /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8365C3061BCD05CA00F34098 /* CryptoSwift.framework */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83601E771BCCD765005B4AC3 /* KGNCache.framework in Frameworks */,
+				83F4F1181BD1D7BF0039C7DF /* CryptoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,6 +363,10 @@
 		83601E841BCCD765005B4AC3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidkeegan.KGNCacheTests;
@@ -371,6 +377,10 @@
 		83601E851BCCD765005B4AC3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidkeegan.KGNCacheTests;

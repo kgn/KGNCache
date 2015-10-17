@@ -6,7 +6,7 @@
 //  Copyright © 2015 David Keegan. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import CryptoSwift
 
 private let diskQueue = dispatch_queue_create("com.davidkeegan.KGNCache.disk", DISPATCH_QUEUE_SERIAL)
@@ -84,15 +84,12 @@ public class Cache {
         return cachePath
     }
 
-    public init(named: String? = nil) {
+    public init(named: String? = nil) throws {
         var cacheName = NSBundle.mainBundle().bundleIdentifier
         if named != nil {
             cacheName = "\(cacheName!).\(named!)"
         }
         self.cacheName = cacheName!
-    }
-
-    public func setup() throws {
         try self.cacheDirectory(true)
     }
 

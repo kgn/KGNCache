@@ -10,20 +10,45 @@ import XCTest
 @testable import KGNCache
 
 class KGNCacheTests: XCTestCase {
-    
+
+    var cache: Cache!
+
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+
+        do {
+            try self.cache = Cache(named: "test")
+        } catch let error {
+            XCTAssertNotNil(error, "error: \(error)")
+        }
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        do {
+            try self.cache.clearCache()
+        } catch let error {
+            XCTAssertNotNil(error, "error: \(error)")
+        }
+
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testString() {
+        let value = "Steve Jobs"
+
+        do {
+            try self.cache.setObject(value, forKey: "name")
+        } catch let error {
+            XCTAssertNotNil(error, "error: \(error)")
+        }
+
+        do {
+            try self.cache.objectForKey("name") {
+                XCTAssertEqual($0 as? String, value)
+            }
+        } catch let error {
+            XCTAssertNotNil(error, "error: \(error)")
+        }
     }
     
     func testPerformanceExample() {
