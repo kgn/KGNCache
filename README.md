@@ -32,7 +32,7 @@ pod 'KGNCache'
 *TODO*
 
 TODO:
-- [X] Travis
+- [ ] Travis
 - [ ] Badges (Create release)
 - [X] Tests
 - [X] Carthage

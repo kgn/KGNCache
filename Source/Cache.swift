@@ -60,6 +60,7 @@ private class CacheObject: NSObject, NSCoding {
     }
 }
 
+/// The location of where the cache data came from.
 public enum CacheLocation {
     case Memory
     case Disk

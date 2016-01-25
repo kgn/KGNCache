@@ -10,6 +10,7 @@
 // TODO: Test disk cache
 
 import XCTest
+import KGNThread
 @testable import KGNCache
 
 class TestObject: NSObject, NSCoding {
@@ -173,6 +174,31 @@ class KGNCacheTests: XCTestCase {
         self.runCacheTest(__FUNCTION__, object: strings) {
             XCTAssertEqual($0 as! [String], strings)
         }
+    }
+
+    func testExpires() {
+        let one = 1
+        let key = "One"
+
+        let dateComponents = NSDateComponents()
+        dateComponents.second = 1
+        self.cache.setObject(one, forKey: key, expires: dateComponents)
+
+        let expectation1 = expectationWithDescription("\(__FUNCTION__)1")
+        self.cache.objectForKey(key) { object, location in
+            XCTAssertEqual(object as? Int, one)
+            expectation1.fulfill()
+        }
+
+        let expectation2 = expectationWithDescription("\(__FUNCTION__)2")
+        Thread.Main(delay: NSTimeInterval(dateComponents.second)) {
+            self.cache.objectForKey(key) { object, location in
+                XCTAssertNil(object)
+                expectation2.fulfill()
+            }
+        }
+
+        waitForExpectationsWithTimeout(NSTimeInterval(dateComponents.second+1), handler: nil)
     }
     
 }
