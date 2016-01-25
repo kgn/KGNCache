@@ -8,9 +8,7 @@
 
 import Foundation
 import CryptoSwift
-
-private let queueName = "KGNCache"
-private let diskQueue = dispatch_queue_create(queueName, DISPATCH_QUEUE_SERIAL)
+import KGNThread
 
 private class CacheObject: NSObject, NSCoding {
     var key: String!
@@ -112,7 +110,7 @@ public class Cache {
      - Parameter named: The name of the cache.
      */
     public init(named: String) {
-        self.cacheName = "\(NSBundle.mainBundle().bundleIdentifier ?? queueName).\(named)"
+        self.cacheName = "\(NSBundle.mainBundle().bundleIdentifier ?? "kgn.cache").\(named)"
         self.cacheDirectory(create: true)
     }
 
@@ -137,14 +135,14 @@ public class Cache {
         }
 
         if NSFileManager().fileExistsAtPath(cacheObjectPath) {
-            dispatch_async(diskQueue, {
+            Thread.Disk {
                 if let cacheObject = NSKeyedUnarchiver.unarchiveObjectWithFile(cacheObjectPath) as? CacheObject {
                     self.memoryCache.setObject(cacheObject, forKey: keyHash)
                     callback(object: self.objectFromCacheObject(cacheObject), location: .Disk)
                 } else {
                     callback(object: nil, location: nil)
                 }
-            })
+            }
         } else {
             callback(object: nil, location: nil)
         }
@@ -171,10 +169,10 @@ public class Cache {
         }
 
         let data = NSKeyedArchiver.archivedDataWithRootObject(cacheObject)
-        dispatch_async(diskQueue, {
+        Thread.Disk {
             data.writeToFile(cacheObjectPath, atomically: true)
             callback?(location: .Disk)
-        })
+        }
     }
 
     /**
