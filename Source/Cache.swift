@@ -103,6 +103,15 @@ public class Cache {
         return "\(cacheDirectory)/\(keyHash)"
     }
 
+    private func removeFileItem(path: String) -> Bool? {
+        do {
+            try NSFileManager().removeItemAtPath(path)
+            return true
+        } catch {
+            return false
+        }
+    }
+
     // MARK: - Public Methods
 
     /**
@@ -183,32 +192,17 @@ public class Cache {
      */
     public func removeObjectForKey(key: String) {
         let keyHash = key.sha1()
-
         self.memoryCache.removeObjectForKey(keyHash)
-
-        guard let cacheObjectPath = self.cacheObjectPath(keyHash) else {
-            return
-        }
-
-        do {
-            try NSFileManager().removeItemAtPath(cacheObjectPath)
-        } catch {
-            // Do something?
+        if let cacheObjectPath = self.cacheObjectPath(keyHash) {
+            self.removeFileItem(cacheObjectPath)
         }
     }
 
     /// Remove all objects from the cache.
     public func clearCache() {
         self.memoryCache.removeAllObjects()
-
-        guard let cacheDirectory = self.cacheDirectory() else {
-            return
-        }
-
-        do {
-            try NSFileManager().removeItemAtPath(cacheDirectory)
-        } catch {
-            // Do something?
+        if let cacheDirectory = self.cacheDirectory() {
+            self.removeFileItem(cacheDirectory)
         }
     }
 
