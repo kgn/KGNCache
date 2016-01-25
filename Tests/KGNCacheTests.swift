@@ -6,6 +6,9 @@
 //  Copyright © 2015 David Keegan. All rights reserved.
 //
 
+// TODO: Test memory cache
+// TODO: Test disk cache
+
 import XCTest
 @testable import KGNCache
 
@@ -47,44 +50,20 @@ class TestObject: NSObject, NSCoding {
 
 class KGNCacheTests: XCTestCase {
 
-    var cache: Cache!
-
-    override func setUp() {
-        super.setUp()
-
-        do {
-            try self.cache = Cache(named: "test")
-        } catch let error {
-            XCTAssertNotNil(error, "error: \(error)")
-        }
-    }
-    
-    override func tearDown() {
-        do {
-            try self.cache.clearCache()
-        } catch let error {
-            XCTAssertNotNil(error, "error: \(error)")
-        }
-
-        super.tearDown()
-    }
+    var cache = Cache(named: "test")
 
     func runCacheTest(object: AnyObject, callback: (cacheObject: AnyObject?) -> Void) {
-        do {
-            try self.cache.setObject(object, forKey: "name")
-        } catch let error {
-            XCTAssertNotNil(error, "error: \(error)")
+        let key = "name"
+        self.cache.setObject(object, forKey: key) { location in
+            XCTAssertEqual(location, .Disk)
         }
 
-        do {
-            try self.cache.objectForKey("name") {
-                callback(cacheObject: $0)
-            }
-        } catch let error {
-            XCTAssertNotNil(error, "error: \(error)")
+        self.cache.objectForKey(key) { cacheObject, location in
+            callback(cacheObject: cacheObject)
+            self.cache.clearCache()
         }
     }
-    
+
     func testInt() {
         let negative = -35
         self.runCacheTest(negative) {

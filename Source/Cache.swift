@@ -62,8 +62,9 @@ private class CacheObject: NSObject, NSCoding {
     }
 }
 
-public enum CacheError: ErrorType {
-    case NoCacheDirectory
+public enum CacheLocation {
+    case Memory
+    case Disk
 }
 
 public class Cache {
@@ -71,14 +72,18 @@ public class Cache {
     private let cacheName: String!
     private let memoryCache = NSCache()
 
-    private func cacheDirectory(create: Bool = false) throws -> String {
+    private func cacheDirectory(create create: Bool = false) -> String? {
         guard let cacheDirectory = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first else {
-            throw CacheError.NoCacheDirectory
+            return nil
         }
 
         let cachePath = "\(cacheDirectory)/\(self.cacheName)"
         if create && !NSFileManager().fileExistsAtPath(cachePath) {
-            try NSFileManager().createDirectoryAtPath(cachePath, withIntermediateDirectories: true, attributes: nil)
+            do {
+                try NSFileManager().createDirectoryAtPath(cachePath, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+                return nil
+            }
         }
 
         return cachePath
@@ -91,6 +96,14 @@ public class Cache {
         return cacheObject?.object
     }
 
+    internal func cacheObjectPath(keyHash: String) -> String? {
+        guard let cacheDirectory = self.cacheDirectory() else {
+            return nil
+        }
+
+        return "\(cacheDirectory)/\(keyHash)"
+    }
+
     // MARK: - Public Methods
 
     /**
@@ -98,13 +111,9 @@ public class Cache {
 
      - Parameter named: The name of the cache.
      */
-    public init(named: String? = nil) throws {
-        var cacheName = NSBundle.mainBundle().bundleIdentifier ?? queueName
-        if named != nil {
-            cacheName = "\(cacheName).\(named!)"
-        }
-        self.cacheName = cacheName
-        try self.cacheDirectory(true)
+    public init(named: String) {
+        self.cacheName = "\(NSBundle.mainBundle().bundleIdentifier ?? queueName).\(named)"
+        self.cacheDirectory(create: true)
     }
 
     /**
@@ -114,26 +123,30 @@ public class Cache {
      - Parameter callback: The method to call with the retrieved object from the cache.
      The retrieved object may be nil if an object for the given key does not exist, or if it has expired.
      */
-    public func objectForKey(key: String, callback: (object: AnyObject?) -> Void) throws {
+    public func objectForKey(key: String, callback: (object: AnyObject?, location: CacheLocation?) -> Void) {
         let keyHash = key.sha1()
+
         if let cacheObject = self.memoryCache.objectForKey(keyHash) as? CacheObject {
-            callback(object: self.objectFromCacheObject(cacheObject))
+            callback(object: self.objectFromCacheObject(cacheObject), location: .Memory)
             return
         }
 
-        let cacheDirectory = try self.cacheDirectory()
-        let cacheObjectPath = "\(cacheDirectory)/\(keyHash)"
+        guard let cacheObjectPath = self.cacheObjectPath(keyHash) else {
+            callback(object: nil, location: nil)
+            return
+        }
+
         if NSFileManager().fileExistsAtPath(cacheObjectPath) {
             dispatch_async(diskQueue, {
                 if let cacheObject = NSKeyedUnarchiver.unarchiveObjectWithFile(cacheObjectPath) as? CacheObject {
                     self.memoryCache.setObject(cacheObject, forKey: keyHash)
-                    callback(object: self.objectFromCacheObject(cacheObject))
+                    callback(object: self.objectFromCacheObject(cacheObject), location: .Disk)
                 } else {
-                    callback(object: nil)
+                    callback(object: nil, location: nil)
                 }
             })
         } else {
-            callback(object: nil)
+            callback(object: nil, location: nil)
         }
     }
 
@@ -144,18 +157,23 @@ public class Cache {
      - Parameter object: The object to store in the cache.
      - Parameter forKey: The key of the object in the cache.
      - Parameter expires: An optional date components object that defines how long the object should be cached for.
+     - Parameter callback: This method is called when the object has been stored.
      */
-    public func setObject(object: AnyObject, forKey key: String, expires: NSDateComponents? = nil) throws {
+    public func setObject(object: AnyObject, forKey key: String, expires: NSDateComponents? = nil, callback: ((location: CacheLocation?) -> Void)? = nil) {
         let keyHash = key.sha1()
         let cacheObject = CacheObject(key: key, object: object, expires: expires)
 
         self.memoryCache.setObject(cacheObject, forKey: keyHash)
 
-        let cacheDirectory = try self.cacheDirectory()
-        let cacheObjectPath = "\(cacheDirectory)/\(keyHash)"
+        guard let cacheObjectPath = self.cacheObjectPath(keyHash) else {
+            callback?(location: nil)
+            return
+        }
+
         let data = NSKeyedArchiver.archivedDataWithRootObject(cacheObject)
         dispatch_async(diskQueue, {
             data.writeToFile(cacheObjectPath, atomically: true)
+            callback?(location: .Disk)
         })
     }
 
@@ -164,20 +182,35 @@ public class Cache {
 
      - Parameter forKey: The key of the object in the cache.
      */
-    public func removeObjectForKey(key: String) throws {
+    public func removeObjectForKey(key: String) {
         let keyHash = key.sha1()
+
         self.memoryCache.removeObjectForKey(keyHash)
 
-        let cacheDirectory = try self.cacheDirectory()
-        let cacheObjectPath = "\(cacheDirectory)/\(keyHash)"
-        try NSFileManager().removeItemAtPath(cacheObjectPath)
+        guard let cacheObjectPath = self.cacheObjectPath(keyHash) else {
+            return
+        }
+
+        do {
+            try NSFileManager().removeItemAtPath(cacheObjectPath)
+        } catch {
+            // Do something?
+        }
     }
 
     /// Remove all objects from the cache.
-    public func clearCache() throws {
+    public func clearCache() {
         self.memoryCache.removeAllObjects()
-        try NSFileManager().removeItemAtPath(self.cacheDirectory())
-        try self.cacheDirectory(true)
+
+        guard let cacheDirectory = self.cacheDirectory() else {
+            return
+        }
+
+        do {
+            try NSFileManager().removeItemAtPath(cacheDirectory)
+        } catch {
+            // Do something?
+        }
     }
 
 }
