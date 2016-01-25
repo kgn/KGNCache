@@ -1,6 +1,6 @@
 //
 //  Cache.swift
-//  Tilt
+//  Cache
 //
 //  Created by David Keegan on 8/12/15.
 //  Copyright © 2015 David Keegan. All rights reserved.
@@ -9,7 +9,8 @@
 import Foundation
 import CryptoSwift
 
-private let diskQueue = dispatch_queue_create("com.davidkeegan.KGNCache.disk", DISPATCH_QUEUE_SERIAL)
+private let queueName = "KGNCache"
+private let diskQueue = dispatch_queue_create(queueName, DISPATCH_QUEUE_SERIAL)
 
 private class CacheObject: NSObject, NSCoding {
     var key: String!
@@ -40,7 +41,7 @@ private class CacheObject: NSObject, NSCoding {
         }
     }
 
-    @objc private func encodeWithCoder(aCoder: NSCoder) {
+    @objc func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(self.key, forKey: "key")
         aCoder.encodeObject(self.object, forKey: "object")
         aCoder.encodeObject(self.expires, forKey: "expires")
@@ -67,8 +68,7 @@ public enum CacheError: ErrorType {
 
 public class Cache {
 
-    var cacheName: String
-
+    private let cacheName: String!
     private let memoryCache = NSCache()
 
     private func cacheDirectory(create: Bool = false) throws -> String {
@@ -84,15 +84,6 @@ public class Cache {
         return cachePath
     }
 
-    public init(named: String? = nil) throws {
-        var cacheName = NSBundle.mainBundle().bundleIdentifier
-        if named != nil {
-            cacheName = "\(cacheName!).\(named!)"
-        }
-        self.cacheName = cacheName!
-        try self.cacheDirectory(true)
-    }
-
     private func objectFromCacheObject(cacheObject: CacheObject?) -> AnyObject? {
         if cacheObject?.hasExpired() == true {
             return nil
@@ -100,6 +91,29 @@ public class Cache {
         return cacheObject?.object
     }
 
+    // MARK: - Public Methods
+
+    /**
+     Create a `Cache` object. This sets up both the memory and disk cache.
+
+     - Parameter named: The name of the cache.
+     */
+    public init(named: String? = nil) throws {
+        var cacheName = NSBundle.mainBundle().bundleIdentifier ?? queueName
+        if named != nil {
+            cacheName = "\(cacheName).\(named!)"
+        }
+        self.cacheName = cacheName
+        try self.cacheDirectory(true)
+    }
+
+    /**
+     Retrieve an object from the cache by it's key.
+
+     - Parameter key: The key of the object in the cache.
+     - Parameter callback: The method to call with the retrieved object from the cache.
+     The retrieved object may be nil if an object for the given key does not exist, or if it has expired.
+     */
     public func objectForKey(key: String, callback: (object: AnyObject?) -> Void) throws {
         let keyHash = key.sha1()
         if let cacheObject = self.memoryCache.objectForKey(keyHash) as? CacheObject {
@@ -123,6 +137,14 @@ public class Cache {
         }
     }
 
+    /**
+     Store an object in the cache for a given key. 
+     An optional expiration date components object may be set if the object should expire.
+
+     - Parameter object: The object to store in the cache.
+     - Parameter forKey: The key of the object in the cache.
+     - Parameter expires: An optional date components object that defines how long the object should be cached for.
+     */
     public func setObject(object: AnyObject, forKey key: String, expires: NSDateComponents? = nil) throws {
         let keyHash = key.sha1()
         let cacheObject = CacheObject(key: key, object: object, expires: expires)
@@ -137,6 +159,11 @@ public class Cache {
         })
     }
 
+    /**
+     Remove an object from the cache.
+
+     - Parameter forKey: The key of the object in the cache.
+     */
     public func removeObjectForKey(key: String) throws {
         let keyHash = key.sha1()
         self.memoryCache.removeObjectForKey(keyHash)
@@ -146,6 +173,7 @@ public class Cache {
         try NSFileManager().removeItemAtPath(cacheObjectPath)
     }
 
+    /// Remove all objects from the cache.
     public func clearCache() throws {
         self.memoryCache.removeAllObjects()
         try NSFileManager().removeItemAtPath(self.cacheDirectory())

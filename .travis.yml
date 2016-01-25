@@ -1,18 +1,18 @@
 language: objective-c
-osx_image: xcode7
+osx_image: xcode7.1
 
 env:
+  global:
+  - PROJECT=KGNCache
+  - SCHEME=$PROJECT
   matrix:
-    # - SDK=iphonesimulator8.0
-    # - SDK=iphonesimulator8.1
-    # - SDK=iphonesimulator8.2
-    # - SDK=iphonesimulator8.3
-    # - SDK=iphonesimulator8.4
-    - SDK=iphonesimulator9.0
-
-before_install:
-  - export PROJECT=KGNCache
-  - export SCHEME=$PROJECT    
+    - DESTINATION="OS=8.1,name=iPhone 4s"
+    - DESTINATION="OS=8.2,name=iPhone 5"
+    - DESTINATION="OS=8.3,name=iPhone 5s"
+    - DESTINATION="OS=8.4,name=iPhone 6"
+    - DESTINATION="OS=9.0,name=iPhone 6 Plus"
+    - DESTINATION="OS=9.1,name=iPhone 6s"
+    - DESTINATION="OS=9.1,name=iPhone 6s Plus"    
 
 script: 
-  - xctool clean test -project "$PROJECT.xcodeproj" -scheme "$SCHEME" -sdk $SDK
+  - xcodebuild test -project "$PROJECT.xcodeproj" -scheme "$SCHEME" -sdk iphonesimulator -destination "$DESTINATION"

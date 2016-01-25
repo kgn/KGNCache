@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		831F0CD11BCCF26E00527AB8 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F0CCF1BCCF26E00527AB8 /* Cache.swift */; };
+		835B30D51C5586BA00B86FAC /* CryptoSwift.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8365C3061BCD05CA00F34098 /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		83601E701BCCD765005B4AC3 /* KGNCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 83601E6F1BCCD765005B4AC3 /* KGNCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		83601E771BCCD765005B4AC3 /* KGNCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83601E6C1BCCD765005B4AC3 /* KGNCache.framework */; };
 		83601E7C1BCCD765005B4AC3 /* KGNCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83601E7B1BCCD765005B4AC3 /* KGNCacheTests.swift */; };
 		8365C3071BCD05CA00F34098 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8365C3061BCD05CA00F34098 /* CryptoSwift.framework */; };
-		83F4F1181BD1D7BF0039C7DF /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8365C3061BCD05CA00F34098 /* CryptoSwift.framework */; settings = {ASSET_TAGS = (); }; };
+		83F4F1181BD1D7BF0039C7DF /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8365C3061BCD05CA00F34098 /* CryptoSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +25,20 @@
 			remoteInfo = KGNCache;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		835B30D41C5586AC00B86FAC /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				835B30D51C5586BA00B86FAC /* CryptoSwift.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		831F0CCF1BCCF26E00527AB8 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
@@ -134,6 +149,7 @@
 				83601E721BCCD765005B4AC3 /* Sources */,
 				83601E731BCCD765005B4AC3 /* Frameworks */,
 				83601E741BCCD765005B4AC3 /* Resources */,
+				835B30D41C5586AC00B86FAC /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
