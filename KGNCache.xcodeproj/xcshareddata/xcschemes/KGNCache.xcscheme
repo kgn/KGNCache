@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "83601E751BCCD765005B4AC3"
+               BuildableName = "KGNCacheTests.xctest"
+               BlueprintName = "KGNCacheTests"
+               ReferencedContainer = "container:KGNCache.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "83601E6B1BCCD765005B4AC3"
+            BuildableName = "KGNCache.framework"
+            BlueprintName = "KGNCache"
+            ReferencedContainer = "container:KGNCache.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
