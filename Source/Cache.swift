@@ -145,10 +145,10 @@ public class Cache {
         }
 
         if NSFileManager().fileExistsAtPath(cacheObjectPath) {
-            Thread.Disk {
+            Thread.Disk { [weak self] in
                 if let cacheObject = NSKeyedUnarchiver.unarchiveObjectWithFile(cacheObjectPath) as? CacheObject {
-                    self.memoryCache.setObject(cacheObject, forKey: keyHash)
-                    callback(object: self.objectFromCacheObject(cacheObject), location: .Disk)
+                    self?.memoryCache.setObject(cacheObject, forKey: keyHash)
+                    callback(object: self?.objectFromCacheObject(cacheObject), location: .Disk)
                 } else {
                     callback(object: nil, location: nil)
                 }
