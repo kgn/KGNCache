@@ -39,14 +39,14 @@ private class CacheObject: NSObject, NSCoding {
         }
     }
 
-    @objc func encodeWithCoder(aCoder: NSCoder) {
+    @objc private func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(self.key, forKey: "key")
         aCoder.encodeObject(self.object, forKey: "object")
         aCoder.encodeObject(self.expires, forKey: "expires")
         aCoder.encodeObject(self.date, forKey: "date")
     }
 
-    func hasExpired() -> Bool {
+    private func hasExpired() -> Bool {
         guard let components = self.expires else {
             return false
         }

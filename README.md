@@ -1,6 +1,6 @@
 # KGNCache
 
-`KGNCache` is a memory and file based cache.
+`KGNCache` is a memory and file based cache. If the object exists on the file system it’s returned from there and added to the memory cache. `KGNCache` uses `NSCache` under the hood for the memory cache so will automatically clear out objects under memory pressure.
 
 [![iOS 8.0+](http://img.shields.io/badge/iOS-8.0%2B-blue.svg)]()
 [![Xcode 7.0](http://img.shields.io/badge/Xcode-7.0-blue.svg)]()
@@ -29,13 +29,22 @@ pod 'KGNCache'
 
 ## Examples
 
-*TODO*
+``` Swift
+let name = "Steve Jobs"
+
+let cache = Cache(named: "names")
+cache.setObject(name, forKey: "name")
+
+cache.objectForKey(key) {
+    print($0) // Steve Jobs
+}
+```
 
 TODO:
-- [ ] Travis
+- [ ] Travis (Figure out why tests are passing, but failing on Travis...)
 - [ ] Badges (Create release)
 - [X] Tests
 - [X] Carthage
 - [ ] CocoaPods (Just need to publish)
-- [ ] Description (Need code examples)
+- [X] Description
 - [X] Documentation

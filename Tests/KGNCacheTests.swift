@@ -67,7 +67,14 @@ class KGNCacheTests: XCTestCase {
             objectForKeyExpectation.fulfill()
         }
 
-        waitForExpectationsWithTimeout(1, handler: nil)
+        let removeObjectForKeyExpectation = expectationWithDescription("\(key).\(object).removeObjectForKey")
+        self.cache.removeObjectForKey(key)
+        self.cache.objectForKey(key) { cacheObject, location in
+            XCTAssertNil(cacheObject)
+            removeObjectForKeyExpectation.fulfill()
+        }
+
+        waitForExpectationsWithTimeout(2, handler: nil)
     }
 
     func testInt() {
