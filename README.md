@@ -46,5 +46,5 @@ TODO:
 - [X] Tests
 - [X] Carthage
 - [ ] CocoaPods (Just need to publish)
-- [X] Description
+- [ ] Description (Add expiration example)
 - [X] Documentation
