@@ -79,31 +79,31 @@ class KGNCacheTests: XCTestCase {
 
     func testInt() {
         let negative = -35
-        self.runCacheTest(__FUNCTION__, object: negative) {
+        self.runCacheTest(#function, object: negative) {
             XCTAssertNotEqual($0 as? Int, 12)
             XCTAssertEqual($0 as? Int, negative)
         }
 
         let zero = 0
-        self.runCacheTest(__FUNCTION__, object: zero) {
+        self.runCacheTest(#function, object: zero) {
             XCTAssertNotEqual($0 as? Int, 12)
             XCTAssertEqual($0 as? Int, zero)
         }
 
         let seven = 7
-        self.runCacheTest(__FUNCTION__, object: seven) {
+        self.runCacheTest(#function, object: seven) {
             XCTAssertNotEqual($0 as? Int, 12)
             XCTAssertEqual($0 as? Int, seven)
         }
 
         let three = 432
-        self.runCacheTest(__FUNCTION__, object: three) {
+        self.runCacheTest(#function, object: three) {
             XCTAssertNotEqual($0 as? Int, 12)
             XCTAssertEqual($0 as? Int, three)
         }
 
         let six = 100_000
-        self.runCacheTest(__FUNCTION__, object: six) {
+        self.runCacheTest(#function, object: six) {
             XCTAssertNotEqual($0 as? Int, 12)
             XCTAssertEqual($0 as? Int, six)
         }
@@ -111,25 +111,25 @@ class KGNCacheTests: XCTestCase {
 
     func testDouble() {
         let zero: Double = 0
-        self.runCacheTest(__FUNCTION__, object: zero) {
+        self.runCacheTest(#function, object: zero) {
             XCTAssertNotEqual($0 as? Double, 12)
             XCTAssertEqual($0 as? Double, zero)
         }
 
         let pi: Double = 3.14
-        self.runCacheTest(__FUNCTION__, object: pi) {
+        self.runCacheTest(#function, object: pi) {
             XCTAssertNotEqual($0 as? Double, 12)
             XCTAssertEqual($0 as? Double, pi)
         }
 
         let three: Double = 423.534
-        self.runCacheTest(__FUNCTION__, object: three) {
+        self.runCacheTest(#function, object: three) {
             XCTAssertNotEqual($0 as? Double, 12)
             XCTAssertEqual($0 as? Double, three)
         }
 
         let six: Double = 23423.542434
-        self.runCacheTest(__FUNCTION__, object: six) {
+        self.runCacheTest(#function, object: six) {
             XCTAssertNotEqual($0 as? Double, 12)
             XCTAssertEqual($0 as? Double, six)
         }
@@ -137,19 +137,19 @@ class KGNCacheTests: XCTestCase {
 
     func testString() {
         let blank = ""
-        self.runCacheTest(__FUNCTION__, object: blank) {
+        self.runCacheTest(#function, object: blank) {
             XCTAssertNotEqual($0 as? String, "something")
             XCTAssertEqual($0 as? String, blank)
         }
 
         let name = "Steve Jobs"
-        self.runCacheTest(__FUNCTION__, object: name) {
+        self.runCacheTest(#function, object: name) {
             XCTAssertNotEqual($0 as? String, "something")
             XCTAssertEqual($0 as? String, name)
         }
 
         let sentence = "The quick brown fox jumps over the lazy dog"
-        self.runCacheTest(__FUNCTION__, object: sentence) {
+        self.runCacheTest(#function, object: sentence) {
             XCTAssertNotEqual($0 as? String, "something")
             XCTAssertEqual($0 as? String, sentence)
         }
@@ -158,7 +158,7 @@ class KGNCacheTests: XCTestCase {
     func testObject() {
         let object1 = TestObject(int: 12, double: 3.14, string: "Hello World", date: NSDate())
         let object2 = TestObject(int: 21, double: 41.3, string: "World Hello", date: NSDate())
-        self.runCacheTest(__FUNCTION__, object: object1) {
+        self.runCacheTest(#function, object: object1) {
             XCTAssertNotEqual($0 as? TestObject, object2)
             XCTAssertEqual($0 as? TestObject, object1)
         }
@@ -167,18 +167,18 @@ class KGNCacheTests: XCTestCase {
 
     func testArray() {
         let ints = [1, 2, 3]
-        self.runCacheTest(__FUNCTION__, object: ints) {
+        self.runCacheTest(#function, object: ints) {
             XCTAssertNotEqual($0 as! [Int], [])
             XCTAssertEqual($0 as! [Int], ints)
         }
 
         let doubles = [1.1, 2.2, 3.3]
-        self.runCacheTest(__FUNCTION__, object: doubles) {
+        self.runCacheTest(#function, object: doubles) {
             XCTAssertEqual($0 as! [Double], doubles)
         }
 
         let strings = ["this", "is", "a", "test"]
-        self.runCacheTest(__FUNCTION__, object: strings) {
+        self.runCacheTest(#function, object: strings) {
             XCTAssertEqual($0 as! [String], strings)
         }
     }
@@ -191,13 +191,13 @@ class KGNCacheTests: XCTestCase {
         dateComponents.second = 1
         self.cache.setObject(one, forKey: key, expires: dateComponents)
 
-        let expectation1 = expectationWithDescription("\(__FUNCTION__)1")
+        let expectation1 = expectationWithDescription("\(#function)1")
         self.cache.objectForKey(key) { object, location in
             XCTAssertEqual(object as? Int, one)
             expectation1.fulfill()
         }
 
-        let expectation2 = expectationWithDescription("\(__FUNCTION__)2")
+        let expectation2 = expectationWithDescription("\(#function)2")
         Thread.Main(delay: NSTimeInterval(dateComponents.second)) {
             self.cache.objectForKey(key) { object, location in
                 XCTAssertNil(object)
