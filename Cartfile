@@ -1,2 +1,2 @@
-github "krzyzanowskim/CryptoSwift" ~> 0.2
+github "krzyzanowskim/CryptoSwift" ~> 0.3
 github "kgn/KGNThread"

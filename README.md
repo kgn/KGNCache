@@ -2,10 +2,8 @@
 
 `KGNCache` is a memory and file based cache. If the object exists on the file system it’s returned from there and added to the memory cache. `KGNCache` uses `NSCache` under the hood for the memory cache so will automatically clear out objects under memory pressure.
 
-[![iOS 8.0+](http://img.shields.io/badge/iOS-8.0%2B-blue.svg)]()
-[![Swift 2.0+](http://img.shields.io/badge/Swift-2.0-blue.svg)]()
 [![Release](https://img.shields.io/github/release/kgn/KGNCache.svg)](/releases)
-[![Build Status](http://img.shields.io/badge/License-MIT-lightgrey.svg)](/LICENSE)
+[![License](http://img.shields.io/badge/License-MIT-lightgrey.svg)](/LICENSE)
 
 [![Build Status](https://travis-ci.org/kgn/KGNCache.svg)](https://travis-ci.org/kgn/KGNCache)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-Compatible-4BC51D.svg)](https://github.com/Carthage/Carthage)
@@ -42,13 +40,13 @@ cache.objectForKey(key) {
 ```
 
 TODO:
-- [ ] Travis (Figure out why tests are passing, but failing on Travis...)
-- [ ] Badges
+- [X] Travis
+- [X] Badges
 - [X] Tests
 - [X] Carthage
 - [ ] CocoaPods (Just need to publish)
 - [ ] Description (Add expiration example)
 - [X] Documentation
 - [ ] AppleTV
-- [ ] Prebuilt Frameworks
+- [X] Prebuilt Frameworks
 - [ ] Travis Test Matrix
