@@ -1,18 +1,44 @@
 language: objective-c
-osx_image: xcode7.1
+osx_image: xcode7.3
 
 env:
   global:
-  - PROJECT=KGNCache
-  - SCHEME=$PROJECT
-  matrix:
-    - DESTINATION="OS=8.1,name=iPhone 4s"
-    - DESTINATION="OS=8.2,name=iPhone 5"
-    - DESTINATION="OS=8.3,name=iPhone 5s"
-    - DESTINATION="OS=8.4,name=iPhone 6"
-    - DESTINATION="OS=9.0,name=iPhone 6 Plus"
-    - DESTINATION="OS=9.1,name=iPhone 6s"
-    - DESTINATION="OS=9.1,name=iPhone 6s Plus"    
+    - PROJECT=KGNCache
+    - SCHEME=$PROJECT
+    - DESTINATION="OS=9.3,name=iPhone 6s Plus"
+  # matrix:
+  #   - DESTINATION="OS=8.1,name=iPhone 4s"
+  #   - DESTINATION="OS=8.2,name=iPhone 5"
+  #   - DESTINATION="OS=8.3,name=iPhone 5s"
+  #   - DESTINATION="OS=8.4,name=iPhone 6"
+  #   - DESTINATION="OS=9.0,name=iPhone 6 Plus"
+  #   - DESTINATION="OS=9.1,name=iPhone 6s"
+  #   - DESTINATION="OS=9.1,name=iPhone 6s Plus"
+  #   - DESTINATION="OS=9.2,name=iPhone 6s"
+  #   - DESTINATION="OS=9.2,name=iPhone 6s Plus"
+  #   - DESTINATION="OS=9.3,name=iPhone 6s"
+    # - DESTINATION="OS=9.3,name=iPhone 6s Plus"
 
-script: 
+script:
   - xcodebuild test -project "$PROJECT.xcodeproj" -scheme "$SCHEME" -sdk iphonesimulator -destination "$DESTINATION"
+
+before_install:
+  - brew update
+  - brew install carthage
+
+# before_script:
+#   - carthage bootstrap
+
+before_deploy:
+  - carthage build --no-skip-current
+  - carthage archive $PROJECT
+
+deploy:
+  provider: releases
+  api_key:
+    secure: kih0anzQ1VXd4kBxLk9y/p0ZMiEEO2TjfaHivRfAbkSzhh4Sff07i3frx9/08RbLDEuNtKRYUCUXYcrWfT1o/nUwaFjpHlMLdDgbdWbpwPYzkl+8bEyv2iv7+xmr839lh8xR+K8pGfwuleE3qY2q3WmuLxYJOOFlJGlzhvXTsAMgh72TAysXP7qFjmAOtl1cffQleBMZZ/J/X15iAu2rWAShYpVWZoXTOM8xgUE5H6gOpjPPOjCx2+kEfoKrC8sAX6KQjaydUnzw+mkrzZ2k48v+1cdgiZUxC66PKSnub5Hxjotd9+iZzTh1t5KkRPVUvmLFUgGTcY3lqWDzwt84ILke0rzQYqweltBjL4KwV53Widr9MgDV68AYd7y2qP+A9e1rOjXwkkDZDf/CIXOQ+4YYtMRfpRD6xsZySDOmshnnzuliKzofXOlmllFDyfjra3s2RdyZIlhz1Ap2pKhaa1+SEYKvdzk8AZihOGZKdK56skW4ScnYPGJRuqUKsPYczwx/gB7UIoapW4o5GusSh++O5/vmnWGiol3VSiBhjuMCRRr4yc9w1JFq4qDhNZbSMwdSf7lauGUncGds2sNZ70HoQ3ym/Nr6lWOBiiRtEj+jzBEhIr1d9Z/H8YGldyxS0lW0LwXvGWAtK+aQwH9SBrZ+14imdFTByqTgpglgvTo=
+  file: $PROJECT.framework.zip
+  skip_cleanup: true
+  on:
+    repo: kgn/$PROJECT
+    tags: true

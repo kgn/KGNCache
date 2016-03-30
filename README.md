@@ -3,8 +3,7 @@
 `KGNCache` is a memory and file based cache. If the object exists on the file system it’s returned from there and added to the memory cache. `KGNCache` uses `NSCache` under the hood for the memory cache so will automatically clear out objects under memory pressure.
 
 [![iOS 8.0+](http://img.shields.io/badge/iOS-8.0%2B-blue.svg)]()
-[![Xcode 7.0](http://img.shields.io/badge/Xcode-7.0-blue.svg)]()
-[![Swift 2.0](http://img.shields.io/badge/Swift-2.0-blue.svg)]()
+[![Swift 2.0+](http://img.shields.io/badge/Swift-2.0-blue.svg)]()
 [![Release](https://img.shields.io/github/release/kgn/KGNCache.svg)](/releases)
 [![Build Status](http://img.shields.io/badge/License-MIT-lightgrey.svg)](/LICENSE)
 
@@ -14,6 +13,8 @@
 [![CocoaPods Platforms](https://img.shields.io/cocoapods/p/KGNCache.svg)](https://cocoapods.org/pods/KGNCache)
 
 [![Twitter](https://img.shields.io/badge/Twitter-@iamkgn-55ACEE.svg)](http://twitter.com/iamkgn)
+[![Follow](https://img.shields.io/github/followers/kgn.svg?style=social&label=Follow%20%40kgn)](https://github.com/kgn)
+[![Star](https://img.shields.io/github/stars/kgn/KGNCache.svg?style=social&label=Star)](https://github.com/kgn/KGNCache)
 
 ## Installing
 
@@ -42,9 +43,12 @@ cache.objectForKey(key) {
 
 TODO:
 - [ ] Travis (Figure out why tests are passing, but failing on Travis...)
-- [ ] Badges (Create release)
+- [ ] Badges
 - [X] Tests
 - [X] Carthage
 - [ ] CocoaPods (Just need to publish)
 - [ ] Description (Add expiration example)
 - [X] Documentation
+- [ ] AppleTV
+- [ ] Prebuilt Frameworks
+- [ ] Travis Test Matrix
