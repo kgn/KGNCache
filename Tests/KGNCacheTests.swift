@@ -77,6 +77,13 @@ class KGNCacheTests: XCTestCase {
         waitForExpectationsWithTimeout(2, handler: nil)
     }
 
+    func testKeyHash() {
+        let cache = Cache(named: "hash")
+        XCTAssertEqual(cache.keyHash("name"), "6ae999552a0d2dca14d62e2bc8b764d377b1dd6c")
+        XCTAssertEqual(cache.keyHash("123567890"), "11b730ae8337329ad82603e5f6f31eda371cd6e6")
+        XCTAssertEqual(cache.keyHash("The quick brown fox jumps over the lazy dog."), "408d94384216f890ff7a0c3528e8bed1e0b01621")
+    }
+
     func testInt() {
         let negative = -35
         self.runCacheTest(#function, object: negative) {

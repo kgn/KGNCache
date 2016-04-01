@@ -112,6 +112,10 @@ public class Cache {
         }
     }
 
+    internal func keyHash(key: String) -> String {
+        return key.sha1()
+    }
+
     // MARK: - Public Methods
 
     /**
@@ -132,7 +136,7 @@ public class Cache {
      The retrieved object may be nil if an object for the given key does not exist, or if it has expired.
      */
     public func objectForKey(key: String, callback: (object: AnyObject?, location: CacheLocation?) -> Void) {
-        let keyHash = key.sha1()
+        let keyHash = self.keyHash(key)
 
         if let cacheObject = self.memoryCache.objectForKey(keyHash) as? CacheObject {
             callback(object: self.objectFromCacheObject(cacheObject), location: .Memory)
@@ -168,7 +172,7 @@ public class Cache {
      - Parameter callback: This method is called when the object has been stored.
      */
     public func setObject(object: AnyObject, forKey key: String, expires: NSDateComponents? = nil, callback: ((location: CacheLocation?) -> Void)? = nil) {
-        let keyHash = key.sha1()
+        let keyHash = self.keyHash(key)
         let cacheObject = CacheObject(key: key, object: object, expires: expires)
 
         self.memoryCache.setObject(cacheObject, forKey: keyHash)
@@ -191,7 +195,7 @@ public class Cache {
      - Parameter forKey: The key of the object in the cache.
      */
     public func removeObjectForKey(key: String) {
-        let keyHash = key.sha1()
+        let keyHash = self.keyHash(key)
         self.memoryCache.removeObjectForKey(keyHash)
         if let cacheObjectPath = self.cacheObjectPath(keyHash) {
             self.removeFileItem(cacheObjectPath)
