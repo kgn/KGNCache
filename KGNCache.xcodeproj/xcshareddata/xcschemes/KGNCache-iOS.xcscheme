@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "83601E6B1BCCD765005B4AC3"
                BuildableName = "KGNCache.framework"
-               BlueprintName = "KGNCache"
+               BlueprintName = "KGNCache-iOS"
                ReferencedContainer = "container:KGNCache.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "83601E751BCCD765005B4AC3"
-               BuildableName = "KGNCacheTests.xctest"
-               BlueprintName = "KGNCacheTests"
+               BuildableName = "KGNCacheTests-iOS.xctest"
+               BlueprintName = "KGNCacheTests-iOS"
                ReferencedContainer = "container:KGNCache.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -44,7 +44,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "83601E6B1BCCD765005B4AC3"
             BuildableName = "KGNCache.framework"
-            BlueprintName = "KGNCache"
+            BlueprintName = "KGNCache-iOS"
             ReferencedContainer = "container:KGNCache.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -66,7 +66,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "83601E6B1BCCD765005B4AC3"
             BuildableName = "KGNCache.framework"
-            BlueprintName = "KGNCache"
+            BlueprintName = "KGNCache-iOS"
             ReferencedContainer = "container:KGNCache.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -84,7 +84,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "83601E6B1BCCD765005B4AC3"
             BuildableName = "KGNCache.framework"
-            BlueprintName = "KGNCache"
+            BlueprintName = "KGNCache-iOS"
             ReferencedContainer = "container:KGNCache.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
