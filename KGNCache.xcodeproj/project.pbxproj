@@ -440,7 +440,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -465,7 +465,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -677,6 +677,7 @@
 				64D31D471D2B8052009B93CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		64D31D551D2B80E1009B93CA /* Build configuration list for PBXNativeTarget "KGNCacheTests-tvOS" */ = {
 			isa = XCConfigurationList;
@@ -685,6 +686,7 @@
 				64D31D571D2B80E1009B93CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		83601E661BCCD765005B4AC3 /* Build configuration list for PBXProject "KGNCache" */ = {
 			isa = XCConfigurationList;
