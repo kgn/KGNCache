@@ -47,6 +47,7 @@ TODO:
 - [ ] CocoaPods (Just need to publish)
 - [ ] Description (Add expiration example)
 - [X] Documentation
-- [ ] AppleTV
+- [X] AppleTV
+- [X] AppleWatch
 - [X] Prebuilt Frameworks
 - [ ] Travis Test Matrix
