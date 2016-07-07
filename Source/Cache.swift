@@ -7,7 +7,7 @@
 //
 
 import Foundation
-//import CryptoSwift
+import CryptoSwift
 
 private class CacheObject: NSObject, NSCoding {
     var key: String!
@@ -112,7 +112,7 @@ public class Cache {
     }
 
     internal func hash(forKey key: String) -> String {
-        return key//key.sha1()
+        return key.sha1()
     }
 
     // MARK: - Public Methods
