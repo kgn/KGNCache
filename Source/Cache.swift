@@ -7,79 +7,78 @@
 //
 
 import Foundation
-import CryptoSwift
-import KGNThread
+//import CryptoSwift
 
 private class CacheObject: NSObject, NSCoding {
     var key: String!
     var object: AnyObject!
 
-    var date: NSDate!
-    var expires: NSDateComponents?
+    var date: Date!
+    var expires: DateComponents?
 
-    init(key: String, object: AnyObject, expires: NSDateComponents? = nil) {
+    init(key: String, object: AnyObject, expires: DateComponents? = nil) {
         self.key = key
         self.object = object
         self.expires = expires
-        self.date = NSDate()
+        self.date = Date()
     }
 
     @objc required init?(coder aDecoder: NSCoder) {
-        if let key = aDecoder.decodeObjectForKey("key") as? String {
+        if let key = aDecoder.decodeObject(forKey: "key") as? String {
             self.key = key
         }
-        if let object = aDecoder.decodeObjectForKey("object") {
+        if let object = aDecoder.decodeObject(forKey: "object") {
             self.object = object
         }
-        if let date = aDecoder.decodeObjectForKey("date") as? NSDate {
+        if let date = aDecoder.decodeObject(forKey: "date") as? Date {
             self.date = date
         }
-        if let expires = aDecoder.decodeObjectForKey("expires") as? NSDateComponents {
+        if let expires = aDecoder.decodeObject(forKey: "expires") as? DateComponents {
             self.expires = expires
         }
     }
 
-    @objc private func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.key, forKey: "key")
-        aCoder.encodeObject(self.object, forKey: "object")
-        aCoder.encodeObject(self.expires, forKey: "expires")
-        aCoder.encodeObject(self.date, forKey: "date")
+    @objc private func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.key, forKey: "key")
+        aCoder.encode(self.object, forKey: "object")
+        aCoder.encode(self.expires, forKey: "expires")
+        aCoder.encode(self.date, forKey: "date")
     }
 
     private func hasExpired() -> Bool {
         guard let components = self.expires else {
             return false
         }
-        guard let calander = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian) else {
+        guard let calander = Calendar(calendarIdentifier: Calendar.Identifier.gregorian) else {
             return false
         }
-        guard let componentsDate = calander.dateByAddingComponents(components, toDate: self.date, options: []) else {
+        guard let componentsDate = calander.date(byAdding: components, to: self.date, options: []) else {
             return false
         }
-        return (componentsDate.compare(NSDate()) != .OrderedDescending)
+        return (componentsDate.compare(Date()) != .orderedDescending)
     }
 }
 
 /// The location of where the cache data came from.
 public enum CacheLocation {
-    case Memory
-    case Disk
+    case memory
+    case disk
 }
 
 public class Cache {
 
     private let cacheName: String!
-    private let memoryCache = NSCache()
+    private let memoryCache = Foundation.Cache<AnyObject, CacheObject>()
 
-    private func cacheDirectory(create create: Bool = false) -> String? {
-        guard let cacheDirectory = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first else {
+    private func cacheDirectory(create: Bool = false) -> String? {
+        guard let cacheDirectory = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first else {
             return nil
         }
 
         let cachePath = "\(cacheDirectory)/\(self.cacheName)"
-        if create && !NSFileManager().fileExistsAtPath(cachePath) {
+        if create && !FileManager().fileExists(atPath: cachePath) {
             do {
-                try NSFileManager().createDirectoryAtPath(cachePath, withIntermediateDirectories: true, attributes: nil)
+                try FileManager().createDirectory(atPath: cachePath, withIntermediateDirectories: true, attributes: nil)
             } catch {
                 return nil
             }
@@ -88,14 +87,14 @@ public class Cache {
         return cachePath
     }
 
-    private func objectFromCacheObject(cacheObject: CacheObject?) -> AnyObject? {
+    private func object(fromCacheObject cacheObject: CacheObject?) -> AnyObject? {
         if cacheObject?.hasExpired() == true {
             return nil
         }
         return cacheObject?.object
     }
 
-    internal func cacheObjectPath(keyHash: String) -> String? {
+    internal func cacheObjectPath(withKeyHash keyHash: String) -> String? {
         guard let cacheDirectory = self.cacheDirectory() else {
             return nil
         }
@@ -103,17 +102,17 @@ public class Cache {
         return "\(cacheDirectory)/\(keyHash)"
     }
 
-    private func removeFileItem(path: String) -> Bool? {
+    private func removeFileItem(atPath path: String) -> Bool? {
         do {
-            try NSFileManager().removeItemAtPath(path)
+            try FileManager().removeItem(atPath: path)
             return true
         } catch {
             return false
         }
     }
 
-    internal func keyHash(key: String) -> String {
-        return key.sha1()
+    internal func hash(forKey key: String) -> String {
+        return key//key.sha1()
     }
 
     // MARK: - Public Methods
@@ -124,8 +123,8 @@ public class Cache {
      - Parameter named: The name of the cache.
      */
     public init(named: String) {
-        self.cacheName = "\(NSBundle.mainBundle().bundleIdentifier ?? "kgn.cache").\(named)"
-        self.cacheDirectory(create: true)
+        self.cacheName = "\(Bundle.main().bundleIdentifier ?? "kgn.cache").\(named)"
+        _ = self.cacheDirectory(create: true)
     }
 
     /**
@@ -135,24 +134,24 @@ public class Cache {
      - Parameter callback: The method to call with the retrieved object from the cache.
      The retrieved object may be nil if an object for the given key does not exist, or if it has expired.
      */
-    public func objectForKey(key: String, callback: (object: AnyObject?, location: CacheLocation?) -> Void) {
-        let keyHash = self.keyHash(key)
+    public func object(forKey key: String, callback: (object: AnyObject?, location: CacheLocation?) -> Void) {
+        let keyHash = self.hash(forKey: key)
 
-        if let cacheObject = self.memoryCache.objectForKey(keyHash) as? CacheObject {
-            callback(object: self.objectFromCacheObject(cacheObject), location: .Memory)
+        if let cacheObject = self.memoryCache.object(forKey: keyHash) {
+            callback(object: self.object(fromCacheObject: cacheObject), location: .memory)
             return
         }
 
-        guard let cacheObjectPath = self.cacheObjectPath(keyHash) else {
+        guard let cacheObjectPath = self.cacheObjectPath(withKeyHash: keyHash) else {
             callback(object: nil, location: nil)
             return
         }
 
-        if NSFileManager().fileExistsAtPath(cacheObjectPath) {
-            Thread.Disk { [weak self] in
-                if let cacheObject = NSKeyedUnarchiver.unarchiveObjectWithFile(cacheObjectPath) as? CacheObject {
+        if FileManager().fileExists(atPath: cacheObjectPath) {
+            DispatchQueue.global(attributes: .qosDefault).async { [weak self] in
+                if let cacheObject = NSKeyedUnarchiver.unarchiveObject(withFile: cacheObjectPath) as? CacheObject {
                     self?.memoryCache.setObject(cacheObject, forKey: keyHash)
-                    callback(object: self?.objectFromCacheObject(cacheObject), location: .Disk)
+                    callback(object: self?.object(fromCacheObject: cacheObject), location: .disk)
                 } else {
                     callback(object: nil, location: nil)
                 }
@@ -171,21 +170,24 @@ public class Cache {
      - Parameter expires: An optional date components object that defines how long the object should be cached for.
      - Parameter callback: This method is called when the object has been stored.
      */
-    public func setObject(object: AnyObject, forKey key: String, expires: NSDateComponents? = nil, callback: ((location: CacheLocation?) -> Void)? = nil) {
-        let keyHash = self.keyHash(key)
+    public func set(object: AnyObject, forKey key: String, expires: DateComponents? = nil, callback: ((location: CacheLocation?) -> Void)? = nil) {
+        let keyHash = self.hash(forKey: key)
         let cacheObject = CacheObject(key: key, object: object, expires: expires)
 
         self.memoryCache.setObject(cacheObject, forKey: keyHash)
 
-        guard let cacheObjectPath = self.cacheObjectPath(keyHash) else {
-            callback?(location: nil)
+        guard let cacheObjectPath = self.cacheObjectPath(withKeyHash: keyHash) else {
+            callback?(location: .memory)
             return
         }
 
-        let data = NSKeyedArchiver.archivedDataWithRootObject(cacheObject)
-        Thread.Disk {
-            data.writeToFile(cacheObjectPath, atomically: true)
-            callback?(location: .Disk)
+        let data = NSKeyedArchiver.archivedData(withRootObject: cacheObject)
+        DispatchQueue.global(attributes: .qosDefault).async {
+            if (try? data.write(to: URL(fileURLWithPath: cacheObjectPath), options: [.dataWritingAtomic])) != nil {
+                callback?(location: .disk)
+            } else {
+                callback?(location: .memory)
+            }
         }
     }
 
@@ -194,11 +196,11 @@ public class Cache {
 
      - Parameter forKey: The key of the object in the cache.
      */
-    public func removeObjectForKey(key: String) {
-        let keyHash = self.keyHash(key)
-        self.memoryCache.removeObjectForKey(keyHash)
-        if let cacheObjectPath = self.cacheObjectPath(keyHash) {
-            self.removeFileItem(cacheObjectPath)
+    public func removeObject(forKey key: String) {
+        let keyHash = self.hash(forKey: key)
+        self.memoryCache.removeObject(forKey: keyHash)
+        if let cacheObjectPath = self.cacheObjectPath(withKeyHash: keyHash) {
+            _ = self.removeFileItem(atPath: cacheObjectPath)
         }
     }
 
@@ -206,7 +208,7 @@ public class Cache {
     public func clearCache() {
         self.memoryCache.removeAllObjects()
         if let cacheDirectory = self.cacheDirectory() {
-            self.removeFileItem(cacheDirectory)
+            _ = self.removeFileItem(atPath: cacheDirectory)
         }
     }
 
