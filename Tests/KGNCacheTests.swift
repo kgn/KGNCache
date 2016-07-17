@@ -60,9 +60,9 @@ class KGNCacheTests: XCTestCase {
         }
 
         let objectForKeyExpectation = self.expectation(withDescription: "\(key).\(object).objectForKey")
-        self.cache.object(forKey: key) { cacheObject, location in
+        self.cache.object(forKey: key) { [weak self] cacheObject, location in
             callback(cacheObject: cacheObject)
-            self.cache.clearCache()
+            self?.cache.removeObject(forKey: key)
             objectForKeyExpectation.fulfill()
         }
 
@@ -213,6 +213,28 @@ class KGNCacheTests: XCTestCase {
         }
 
         self.waitForExpectations(withTimeout: TimeInterval(delay+1), handler: nil)
+    }
+    
+    func testClearCache() {
+        let key = "hello"
+        let value = "Hello World"
+        self.cache.set(object: value, forKey: key)
+        
+        let expectation1 = self.expectation(withDescription: "\(#function)1")
+        self.cache.object(forKey: key) { object, location in
+            XCTAssertEqual(object as? String, value)
+            expectation1.fulfill()
+        }
+        
+        self.cache.clear()
+        
+        let expectation2 = self.expectation(withDescription: "\(#function)2")
+        self.cache.object(forKey: key) { object, location in
+            XCTAssertNil(object)
+            expectation2.fulfill()
+        }
+        
+        self.waitForExpectations(withTimeout: 1, handler: nil)
     }
     
 }

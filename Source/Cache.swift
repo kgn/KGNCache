@@ -102,15 +102,6 @@ public class Cache {
         return "\(cacheDirectory)/\(keyHash)"
     }
 
-    private func removeFileItem(atPath path: String) -> Bool? {
-        do {
-            try FileManager().removeItem(atPath: path)
-            return true
-        } catch {
-            return false
-        }
-    }
-
     internal func hash(forKey key: String) -> String {
         return key.sha1()
     }
@@ -200,15 +191,16 @@ public class Cache {
         let keyHash = self.hash(forKey: key)
         self.memoryCache.removeObject(forKey: keyHash)
         if let cacheObjectPath = self.cacheObjectPath(withKeyHash: keyHash) {
-            _ = self.removeFileItem(atPath: cacheObjectPath)
+            _ = try? FileManager().removeItem(atPath: cacheObjectPath)
         }
     }
 
     /// Remove all objects from the cache.
-    public func clearCache() {
+    public func clear() {
         self.memoryCache.removeAllObjects()
         if let cacheDirectory = self.cacheDirectory() {
-            _ = self.removeFileItem(atPath: cacheDirectory)
+            // TODO: this doesn't seem to be working in Swift3
+//            _ = try? FileManager().removeItem(atPath: cacheDirectory)
         }
     }
 
