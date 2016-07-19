@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import CryptoSwift
+import Crypto
 
 private class CacheObject: NSObject, NSCoding {
     var key: String!
@@ -102,8 +102,8 @@ public class Cache {
         return "\(cacheDirectory)/\(keyHash)"
     }
 
-    internal func hash(forKey key: String) -> String {
-        return key.sha1()
+    internal func hash(forKey key: String) -> String? {
+        return key.sha1
     }
 
     // MARK: - Public Methods
@@ -114,7 +114,7 @@ public class Cache {
      - Parameter named: The name of the cache.
      */
     public init(named: String) {
-        self.cacheName = "\(Bundle.main().bundleIdentifier ?? "kgn.cache").\(named)"
+        self.cacheName = "\(Bundle.main.bundleIdentifier ?? "kgn.cache").\(named)"
         _ = self.cacheDirectory(create: true)
     }
 
@@ -126,7 +126,10 @@ public class Cache {
      The retrieved object may be nil if an object for the given key does not exist, or if it has expired.
      */
     public func object(forKey key: String, callback: (object: AnyObject?, location: CacheLocation?) -> Void) {
-        let keyHash = self.hash(forKey: key)
+        guard let keyHash = self.hash(forKey: key) else {
+            callback(object: nil, location: nil)
+            return
+        }
 
         if let cacheObject = self.memoryCache.object(forKey: keyHash) {
             callback(object: self.object(fromCacheObject: cacheObject), location: .memory)
@@ -162,7 +165,11 @@ public class Cache {
      - Parameter callback: This method is called when the object has been stored.
      */
     public func set(object: AnyObject, forKey key: String, expires: DateComponents? = nil, callback: ((location: CacheLocation?) -> Void)? = nil) {
-        let keyHash = self.hash(forKey: key)
+        guard let keyHash = self.hash(forKey: key) else {
+            callback?(location: nil)
+            return
+        }
+        
         let cacheObject = CacheObject(key: key, object: object, expires: expires)
 
         self.memoryCache.setObject(cacheObject, forKey: keyHash)
@@ -174,7 +181,8 @@ public class Cache {
 
         let data = NSKeyedArchiver.archivedData(withRootObject: cacheObject)
         DispatchQueue.global(attributes: .qosDefault).async {
-            if (try? data.write(to: URL(fileURLWithPath: cacheObjectPath), options: [.dataWritingAtomic])) != nil {
+            // TODO: should this use .dataWritingAtomic?
+            if (try? data.write(to: URL(fileURLWithPath: cacheObjectPath), options: [])) != nil {
                 callback?(location: .disk)
             } else {
                 callback?(location: .memory)
@@ -188,7 +196,10 @@ public class Cache {
      - Parameter forKey: The key of the object in the cache.
      */
     public func removeObject(forKey key: String) {
-        let keyHash = self.hash(forKey: key)
+        guard let keyHash = self.hash(forKey: key) else {
+            return
+        }
+        
         self.memoryCache.removeObject(forKey: keyHash)
         if let cacheObjectPath = self.cacheObjectPath(withKeyHash: keyHash) {
             _ = try? FileManager().removeItem(atPath: cacheObjectPath)
@@ -198,10 +209,10 @@ public class Cache {
     /// Remove all objects from the cache.
     public func clear() {
         self.memoryCache.removeAllObjects()
-        if let cacheDirectory = self.cacheDirectory() {
-            // TODO: this doesn't seem to be working in Swift3
+        // TODO: this is not working in swift3
+//        if let cacheDirectory = self.cacheDirectory() {
 //            _ = try? FileManager().removeItem(atPath: cacheDirectory)
-        }
+//        }
     }
 
 }

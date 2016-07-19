@@ -10,20 +10,20 @@
 		64D31D481D2B8088009B93CA /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F0CCF1BCCF26E00527AB8 /* Cache.swift */; };
 		64D31D491D2B808B009B93CA /* KGNCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 83601E6F1BCCD765005B4AC3 /* KGNCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		64D31D581D2B810B009B93CA /* KGNCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83601E7B1BCCD765005B4AC3 /* KGNCacheTests.swift */; };
-		64D31D871D2B89EE009B93CA /* CryptoSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 64D31D7E1D2B88FE009B93CA /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		64D31D891D2B89F2009B93CA /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D31D7E1D2B88FE009B93CA /* CryptoSwift.framework */; };
+		64D31D871D2B89EE009B93CA /* Crypto.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 64D31D7E1D2B88FE009B93CA /* Crypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		64D31D891D2B89F2009B93CA /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D31D7E1D2B88FE009B93CA /* Crypto.framework */; };
 		64D31D8B1D2B8A01009B93CA /* KGNCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D31D401D2B8052009B93CA /* KGNCache.framework */; };
-		64D31D8E1D2B8D35009B93CA /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D31D7E1D2B88FE009B93CA /* CryptoSwift.framework */; };
+		64D31D8E1D2B8D35009B93CA /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D31D7E1D2B88FE009B93CA /* Crypto.framework */; };
 		64FEAF361D2CCF470019DB9A /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F0CCF1BCCF26E00527AB8 /* Cache.swift */; };
-		64FEAF371D2CCF4F0019DB9A /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64FEAF271D2CCF060019DB9A /* CryptoSwift.framework */; };
+		64FEAF371D2CCF4F0019DB9A /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64FEAF271D2CCF060019DB9A /* Crypto.framework */; };
 		64FEAF391D2CCF550019DB9A /* KGNCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 83601E6F1BCCD765005B4AC3 /* KGNCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		831F0CD11BCCF26E00527AB8 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F0CCF1BCCF26E00527AB8 /* Cache.swift */; };
-		835B30D51C5586BA00B86FAC /* CryptoSwift.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8365C3061BCD05CA00F34098 /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		835B30D51C5586BA00B86FAC /* Crypto.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8365C3061BCD05CA00F34098 /* Crypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		83601E701BCCD765005B4AC3 /* KGNCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 83601E6F1BCCD765005B4AC3 /* KGNCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		83601E771BCCD765005B4AC3 /* KGNCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83601E6C1BCCD765005B4AC3 /* KGNCache.framework */; };
 		83601E7C1BCCD765005B4AC3 /* KGNCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83601E7B1BCCD765005B4AC3 /* KGNCacheTests.swift */; };
-		8365C3071BCD05CA00F34098 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8365C3061BCD05CA00F34098 /* CryptoSwift.framework */; };
-		83F4F1181BD1D7BF0039C7DF /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8365C3061BCD05CA00F34098 /* CryptoSwift.framework */; };
+		8365C3071BCD05CA00F34098 /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8365C3061BCD05CA00F34098 /* Crypto.framework */; };
+		83F4F1181BD1D7BF0039C7DF /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8365C3061BCD05CA00F34098 /* Crypto.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +50,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				64D31D871D2B89EE009B93CA /* CryptoSwift.framework in CopyFiles */,
+				64D31D871D2B89EE009B93CA /* Crypto.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,7 +60,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				835B30D51C5586BA00B86FAC /* CryptoSwift.framework in Copy Frameworks */,
+				835B30D51C5586BA00B86FAC /* Crypto.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,8 +71,8 @@
 		64D31D3A1D2B7F6E009B93CA /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		64D31D401D2B8052009B93CA /* KGNCache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KGNCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		64D31D501D2B80E1009B93CA /* KGNCacheTests-tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KGNCacheTests-tvOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		64D31D7E1D2B88FE009B93CA /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/tvOS/CryptoSwift.framework; sourceTree = "<group>"; };
-		64FEAF271D2CCF060019DB9A /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/watchOS/CryptoSwift.framework; sourceTree = "<group>"; };
+		64D31D7E1D2B88FE009B93CA /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crypto.framework; path = Carthage/Build/tvOS/Crypto.framework; sourceTree = "<group>"; };
+		64FEAF271D2CCF060019DB9A /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crypto.framework; path = Carthage/Build/watchOS/Crypto.framework; sourceTree = "<group>"; };
 		64FEAF2E1D2CCF0F0019DB9A /* KGNCache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KGNCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		831F0CCF1BCCF26E00527AB8 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		83601E6C1BCCD765005B4AC3 /* KGNCache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KGNCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,7 +81,7 @@
 		83601E761BCCD765005B4AC3 /* KGNCacheTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KGNCacheTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		83601E7B1BCCD765005B4AC3 /* KGNCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KGNCacheTests.swift; sourceTree = "<group>"; };
 		83601E7D1BCCD765005B4AC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8365C3061BCD05CA00F34098 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
+		8365C3061BCD05CA00F34098 /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crypto.framework; path = Carthage/Build/iOS/Crypto.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				64D31D8E1D2B8D35009B93CA /* CryptoSwift.framework in Frameworks */,
+				64D31D8E1D2B8D35009B93CA /* Crypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +98,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64D31D8B1D2B8A01009B93CA /* KGNCache.framework in Frameworks */,
-				64D31D891D2B89F2009B93CA /* CryptoSwift.framework in Frameworks */,
+				64D31D891D2B89F2009B93CA /* Crypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,7 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				64FEAF371D2CCF4F0019DB9A /* CryptoSwift.framework in Frameworks */,
+				64FEAF371D2CCF4F0019DB9A /* Crypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,7 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8365C3071BCD05CA00F34098 /* CryptoSwift.framework in Frameworks */,
+				8365C3071BCD05CA00F34098 /* Crypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,7 +123,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83601E771BCCD765005B4AC3 /* KGNCache.framework in Frameworks */,
-				83F4F1181BD1D7BF0039C7DF /* CryptoSwift.framework in Frameworks */,
+				83F4F1181BD1D7BF0039C7DF /* Crypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,7 +133,7 @@
 		64D31D7C1D2B88D4009B93CA /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				8365C3061BCD05CA00F34098 /* CryptoSwift.framework */,
+				8365C3061BCD05CA00F34098 /* Crypto.framework */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
@@ -141,7 +141,7 @@
 		64D31D7D1D2B88DD009B93CA /* tvOS */ = {
 			isa = PBXGroup;
 			children = (
-				64D31D7E1D2B88FE009B93CA /* CryptoSwift.framework */,
+				64D31D7E1D2B88FE009B93CA /* Crypto.framework */,
 			);
 			name = tvOS;
 			sourceTree = "<group>";
@@ -149,7 +149,7 @@
 		64FEAF261D2CCED70019DB9A /* watchOS */ = {
 			isa = PBXGroup;
 			children = (
-				64FEAF271D2CCF060019DB9A /* CryptoSwift.framework */,
+				64FEAF271D2CCF060019DB9A /* Crypto.framework */,
 			);
 			name = watchOS;
 			sourceTree = "<group>";
