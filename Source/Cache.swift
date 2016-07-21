@@ -181,8 +181,7 @@ public class Cache {
 
         let data = NSKeyedArchiver.archivedData(withRootObject: cacheObject)
         DispatchQueue.global(attributes: .qosDefault).async {
-            // TODO: should this use .dataWritingAtomic?
-            if (try? data.write(to: URL(fileURLWithPath: cacheObjectPath), options: [])) != nil {
+            if (try? data.write(to: URL(fileURLWithPath: cacheObjectPath), options: [.atomic])) != nil {
                 callback?(location: .disk)
             } else {
                 callback?(location: .memory)
