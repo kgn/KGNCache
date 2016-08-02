@@ -49,12 +49,12 @@ private class CacheObject: NSObject, NSCoding {
         guard let components = self.expires else {
             return false
         }
-        guard let calander = Calendar(calendarIdentifier: Calendar.Identifier.gregorian) else {
+        
+        let calander = Calendar(identifier: .gregorian)
+        guard let componentsDate = calander.date(byAdding: components, to: self.date, wrappingComponents: false) else {
             return false
         }
-        guard let componentsDate = calander.date(byAdding: components, to: self.date, options: []) else {
-            return false
-        }
+        
         return (componentsDate.compare(Date()) != .orderedDescending)
     }
 }
@@ -68,7 +68,7 @@ public enum CacheLocation {
 public class Cache {
 
     private let cacheName: String!
-    private let memoryCache = Foundation.Cache<AnyObject, CacheObject>()
+    private let memoryCache = NSCache<AnyObject, CacheObject>()
 
     private func cacheDirectory(create: Bool = false) -> String? {
         guard let cacheDirectory = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first else {
@@ -142,7 +142,7 @@ public class Cache {
         }
 
         if FileManager().fileExists(atPath: cacheObjectPath) {
-            DispatchQueue.global(attributes: .qosDefault).async { [weak self] in
+            DispatchQueue.global().async { [weak self] in
                 if let cacheObject = NSKeyedUnarchiver.unarchiveObject(withFile: cacheObjectPath) as? CacheObject {
                     self?.memoryCache.setObject(cacheObject, forKey: keyHash)
                     callback(object: self?.object(fromCacheObject: cacheObject), location: .disk)
@@ -180,7 +180,7 @@ public class Cache {
         }
 
         let data = NSKeyedArchiver.archivedData(withRootObject: cacheObject)
-        DispatchQueue.global(attributes: .qosDefault).async {
+        DispatchQueue.global().async {
             if (try? data.write(to: URL(fileURLWithPath: cacheObjectPath), options: [.atomic])) != nil {
                 callback?(location: .disk)
             } else {

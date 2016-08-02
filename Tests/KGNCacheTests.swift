@@ -205,7 +205,7 @@ class KGNCacheTests: XCTestCase {
         }
 
         let expectation2 = self.expectation(description: "\(#function)2")
-        DispatchQueue.main.after(when: .now() + TimeInterval(delay)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(delay)) {
             self.cache.object(forKey: key) { object, location in
                 XCTAssertNil(object)
                 expectation2.fulfill()
