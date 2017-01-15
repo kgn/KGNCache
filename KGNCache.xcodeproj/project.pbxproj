@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		64BF78FB1E2C1665007FE679 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64BF78F81E2C162A007FE679 /* CommonCrypto.framework */; };
+		64BF78FC1E2C1670007FE679 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64BF78F81E2C162A007FE679 /* CommonCrypto.framework */; };
+		64BF78FD1E2C1673007FE679 /* CommonCrypto.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 64BF78F81E2C162A007FE679 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		64BF78FE1E2C1689007FE679 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64BF78F91E2C1635007FE679 /* CommonCrypto.framework */; };
+		64BF78FF1E2C168D007FE679 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64BF78F91E2C1635007FE679 /* CommonCrypto.framework */; };
+		64BF79001E2C168F007FE679 /* CommonCrypto.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 64BF78F91E2C1635007FE679 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		64BF79011E2C1692007FE679 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64BF78FA1E2C163F007FE679 /* CommonCrypto.framework */; };
 		64D31D481D2B8088009B93CA /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F0CCF1BCCF26E00527AB8 /* Cache.swift */; };
 		64D31D491D2B808B009B93CA /* KGNCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 83601E6F1BCCD765005B4AC3 /* KGNCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		64D31D581D2B810B009B93CA /* KGNCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83601E7B1BCCD765005B4AC3 /* KGNCacheTests.swift */; };
@@ -51,6 +58,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				64D31D871D2B89EE009B93CA /* Crypto.framework in Copy Frameworks */,
+				64BF79001E2C168F007FE679 /* CommonCrypto.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,6 +70,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				835B30D51C5586BA00B86FAC /* Crypto.framework in Copy Frameworks */,
+				64BF78FD1E2C1673007FE679 /* CommonCrypto.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,6 +78,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		64BF78F81E2C162A007FE679 /* CommonCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CommonCrypto.framework; path = Carthage/Build/iOS/CommonCrypto.framework; sourceTree = "<group>"; };
+		64BF78F91E2C1635007FE679 /* CommonCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CommonCrypto.framework; path = Carthage/Build/tvOS/CommonCrypto.framework; sourceTree = "<group>"; };
+		64BF78FA1E2C163F007FE679 /* CommonCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CommonCrypto.framework; path = Carthage/Build/watchOS/CommonCrypto.framework; sourceTree = "<group>"; };
 		64D31D3A1D2B7F6E009B93CA /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		64D31D401D2B8052009B93CA /* KGNCache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KGNCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		64D31D501D2B80E1009B93CA /* KGNCacheTests-tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KGNCacheTests-tvOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +103,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64D31D8E1D2B8D35009B93CA /* Crypto.framework in Frameworks */,
+				64BF78FE1E2C1689007FE679 /* CommonCrypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +113,7 @@
 			files = (
 				64D31D8B1D2B8A01009B93CA /* KGNCache.framework in Frameworks */,
 				64D31D891D2B89F2009B93CA /* Crypto.framework in Frameworks */,
+				64BF78FF1E2C168D007FE679 /* CommonCrypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +122,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64FEAF371D2CCF4F0019DB9A /* Crypto.framework in Frameworks */,
+				64BF79011E2C1692007FE679 /* CommonCrypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +131,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8365C3071BCD05CA00F34098 /* Crypto.framework in Frameworks */,
+				64BF78FB1E2C1665007FE679 /* CommonCrypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +141,7 @@
 			files = (
 				83601E771BCCD765005B4AC3 /* KGNCache.framework in Frameworks */,
 				83F4F1181BD1D7BF0039C7DF /* Crypto.framework in Frameworks */,
+				64BF78FC1E2C1670007FE679 /* CommonCrypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				8365C3061BCD05CA00F34098 /* Crypto.framework */,
+				64BF78F81E2C162A007FE679 /* CommonCrypto.framework */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
@@ -143,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				64D31D7E1D2B88FE009B93CA /* Crypto.framework */,
+				64BF78F91E2C1635007FE679 /* CommonCrypto.framework */,
 			);
 			name = tvOS;
 			sourceTree = "<group>";
@@ -151,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				64FEAF271D2CCF060019DB9A /* Crypto.framework */,
+				64BF78FA1E2C163F007FE679 /* CommonCrypto.framework */,
 			);
 			name = watchOS;
 			sourceTree = "<group>";
