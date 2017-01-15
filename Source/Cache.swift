@@ -141,17 +141,17 @@ open class Cache {
             return
         }
 
-        if FileManager().fileExists(atPath: cacheObjectPath) {
-            DispatchQueue.global().async { [weak self] in
+        DispatchQueue.global().async { [weak self] in
+            if FileManager().fileExists(atPath: cacheObjectPath) {
                 if let cacheObject = NSKeyedUnarchiver.unarchiveObject(withFile: cacheObjectPath) as? CacheObject {
                     self?.memoryCache.setObject(cacheObject, forKey: keyHash as AnyObject)
                     callback(self?.object(fromCacheObject: cacheObject), .disk)
                 } else {
                     callback(nil, nil)
                 }
+            } else {
+                callback(nil, nil)
             }
-        } else {
-            callback(nil, nil)
         }
     }
 
@@ -179,8 +179,8 @@ open class Cache {
             return
         }
 
-        let data = NSKeyedArchiver.archivedData(withRootObject: cacheObject)
         DispatchQueue.global().async {
+            let data = NSKeyedArchiver.archivedData(withRootObject: cacheObject)
             if (try? data.write(to: URL(fileURLWithPath: cacheObjectPath), options: [.atomic])) != nil {
                 callback?(.disk)
             } else {
@@ -201,7 +201,9 @@ open class Cache {
         
         self.memoryCache.removeObject(forKey: keyHash as AnyObject)
         if let cacheObjectPath = self.cacheObjectPath(withKeyHash: keyHash) {
-            _ = try? FileManager().removeItem(atPath: cacheObjectPath)
+            DispatchQueue.global().async {
+                try? FileManager().removeItem(atPath: cacheObjectPath)
+            }
         }
     }
 
@@ -209,7 +211,9 @@ open class Cache {
     open func clear() {
         self.memoryCache.removeAllObjects()
         if let cacheDirectory = self.cacheDirectory() {
-            try? FileManager().removeItem(atPath: cacheDirectory)
+            DispatchQueue.global().async {
+                try? FileManager().removeItem(atPath: cacheDirectory)
+            }
         }
     }
 

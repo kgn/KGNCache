@@ -51,6 +51,10 @@ class TestObject: NSObject, NSCoding {
 class KGNCacheTests: XCTestCase {
 
     var cache = Cache(named: "test")
+    
+    func keyName(_ function: String, _ value: Any) -> String {
+        return "\(function)\(value)"
+    }
 
     func runCacheTest(forKey key: String, object: AnyObject, callback: @escaping (_ cacheObject: AnyObject?) -> Void) {
         let setObjectExpectation = self.expectation(description: "\(key).\(object).setObject")
@@ -68,9 +72,12 @@ class KGNCacheTests: XCTestCase {
 
         let removeObjectForKeyExpectation = self.expectation(description: "\(key).\(object).removeObjectForKey")
         self.cache.removeObject(forKey: key)
-        self.cache.object(forKey: key) { cacheObject, location in
-            XCTAssertNil(cacheObject)
-            removeObjectForKeyExpectation.fulfill()
+        DispatchQueue.global().async() { [weak self] in // run on the same thread as disk activity
+            self?.cache.object(forKey: key) { cacheObject, location in
+                XCTAssertNil(cacheObject)
+                XCTAssertNil(location)
+                removeObjectForKeyExpectation.fulfill()
+            }
         }
 
         self.waitForExpectations(timeout: 2, handler: nil)
@@ -85,31 +92,31 @@ class KGNCacheTests: XCTestCase {
 
     func testInt() {
         let negative = -35
-        self.runCacheTest(forKey: #function, object: negative as AnyObject) {
+        self.runCacheTest(forKey: self.keyName(#function, negative), object: negative as AnyObject) {
             XCTAssertNotEqual($0 as? Int, 12)
             XCTAssertEqual($0 as? Int, negative)
         }
 
         let zero = 0
-        self.runCacheTest(forKey: #function, object: zero as AnyObject) {
+        self.runCacheTest(forKey: self.keyName(#function, zero), object: zero as AnyObject) {
             XCTAssertNotEqual($0 as? Int, 12)
             XCTAssertEqual($0 as? Int, zero)
         }
 
         let seven = 7
-        self.runCacheTest(forKey: #function, object: seven as AnyObject) {
+        self.runCacheTest(forKey: self.keyName(#function, seven), object: seven as AnyObject) {
             XCTAssertNotEqual($0 as? Int, 12)
             XCTAssertEqual($0 as? Int, seven)
         }
 
         let three = 432
-        self.runCacheTest(forKey: #function, object: three as AnyObject) {
+        self.runCacheTest(forKey: self.keyName(#function, three), object: three as AnyObject) {
             XCTAssertNotEqual($0 as? Int, 12)
             XCTAssertEqual($0 as? Int, three)
         }
 
         let six = 100_000
-        self.runCacheTest(forKey: #function, object: six as AnyObject) {
+        self.runCacheTest(forKey: self.keyName(#function, six), object: six as AnyObject) {
             XCTAssertNotEqual($0 as? Int, 12)
             XCTAssertEqual($0 as? Int, six)
         }
@@ -117,25 +124,25 @@ class KGNCacheTests: XCTestCase {
 
     func testDouble() {
         let zero: Double = 0
-        self.runCacheTest(forKey: #function, object: zero as AnyObject) {
+        self.runCacheTest(forKey: self.keyName(#function, zero), object: zero as AnyObject) {
             XCTAssertNotEqual($0 as? Double, 12)
             XCTAssertEqual($0 as? Double, zero)
         }
 
         let pi: Double = 3.14
-        self.runCacheTest(forKey: #function, object: pi as AnyObject) {
+        self.runCacheTest(forKey: self.keyName(#function, pi), object: pi as AnyObject) {
             XCTAssertNotEqual($0 as? Double, 12)
             XCTAssertEqual($0 as? Double, pi)
         }
 
         let three: Double = 423.534
-        self.runCacheTest(forKey: #function, object: three as AnyObject) {
+        self.runCacheTest(forKey: self.keyName(#function, three), object: three as AnyObject) {
             XCTAssertNotEqual($0 as? Double, 12)
             XCTAssertEqual($0 as? Double, three)
         }
 
         let six: Double = 23423.542434
-        self.runCacheTest(forKey: #function, object: six as AnyObject) {
+        self.runCacheTest(forKey: self.keyName(#function, six), object: six as AnyObject) {
             XCTAssertNotEqual($0 as? Double, 12)
             XCTAssertEqual($0 as? Double, six)
         }
@@ -143,19 +150,19 @@ class KGNCacheTests: XCTestCase {
 
     func testString() {
         let blank = ""
-        self.runCacheTest(forKey: #function, object: blank as AnyObject) {
+        self.runCacheTest(forKey: self.keyName(#function, blank), object: blank as AnyObject) {
             XCTAssertNotEqual($0 as? String, "something")
             XCTAssertEqual($0 as? String, blank)
         }
 
         let name = "Steve Jobs"
-        self.runCacheTest(forKey: #function, object: name as AnyObject) {
+        self.runCacheTest(forKey: self.keyName(#function, name), object: name as AnyObject) {
             XCTAssertNotEqual($0 as? String, "something")
             XCTAssertEqual($0 as? String, name)
         }
 
         let sentence = "The quick brown fox jumps over the lazy dog"
-        self.runCacheTest(forKey: #function, object: sentence as AnyObject) {
+        self.runCacheTest(forKey: self.keyName(#function, sentence), object: sentence as AnyObject) {
             XCTAssertNotEqual($0 as? String, "something")
             XCTAssertEqual($0 as? String, sentence)
         }
@@ -173,18 +180,18 @@ class KGNCacheTests: XCTestCase {
 
     func testArray() {
         let ints = [1, 2, 3]
-        self.runCacheTest(forKey: #function, object: ints as AnyObject) {
+        self.runCacheTest(forKey: self.keyName(#function, ints), object: ints as AnyObject) {
             XCTAssertNotEqual($0 as! [Int], [])
             XCTAssertEqual($0 as! [Int], ints)
         }
 
         let doubles = [1.1, 2.2, 3.3]
-        self.runCacheTest(forKey: #function, object: doubles as AnyObject) {
+        self.runCacheTest(forKey: self.keyName(#function, doubles), object: doubles as AnyObject) {
             XCTAssertEqual($0 as! [Double], doubles)
         }
 
         let strings = ["this", "is", "a", "test"]
-        self.runCacheTest(forKey: #function, object: strings as AnyObject) {
+        self.runCacheTest(forKey: self.keyName(#function, strings), object: strings as AnyObject) {
             XCTAssertEqual($0 as! [String], strings)
         }
     }
