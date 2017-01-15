@@ -10,7 +10,7 @@
 		64D31D481D2B8088009B93CA /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F0CCF1BCCF26E00527AB8 /* Cache.swift */; };
 		64D31D491D2B808B009B93CA /* KGNCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 83601E6F1BCCD765005B4AC3 /* KGNCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		64D31D581D2B810B009B93CA /* KGNCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83601E7B1BCCD765005B4AC3 /* KGNCacheTests.swift */; };
-		64D31D871D2B89EE009B93CA /* Crypto.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 64D31D7E1D2B88FE009B93CA /* Crypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		64D31D871D2B89EE009B93CA /* Crypto.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 64D31D7E1D2B88FE009B93CA /* Crypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		64D31D891D2B89F2009B93CA /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D31D7E1D2B88FE009B93CA /* Crypto.framework */; };
 		64D31D8B1D2B8A01009B93CA /* KGNCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D31D401D2B8052009B93CA /* KGNCache.framework */; };
 		64D31D8E1D2B8D35009B93CA /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D31D7E1D2B88FE009B93CA /* Crypto.framework */; };
@@ -44,14 +44,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		64D31D841D2B8953009B93CA /* CopyFiles */ = {
+		64D31D841D2B8953009B93CA /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				64D31D871D2B89EE009B93CA /* Crypto.framework in CopyFiles */,
+				64D31D871D2B89EE009B93CA /* Crypto.framework in Copy Frameworks */,
 			);
+			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		835B30D41C5586AC00B86FAC /* Copy Frameworks */ = {
@@ -261,7 +262,7 @@
 				64D31D4C1D2B80E1009B93CA /* Sources */,
 				64D31D4D1D2B80E1009B93CA /* Frameworks */,
 				64D31D4E1D2B80E1009B93CA /* Resources */,
-				64D31D841D2B8953009B93CA /* CopyFiles */,
+				64D31D841D2B8953009B93CA /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -340,9 +341,11 @@
 				TargetAttributes = {
 					64D31D3F1D2B8052009B93CA = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0820;
 					};
 					64D31D4F1D2B80E1009B93CA = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0820;
 					};
 					64FEAF2D1D2CCF0F0019DB9A = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -494,6 +497,7 @@
 				PRODUCT_NAME = KGNCache;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -520,6 +524,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -538,6 +543,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.davidkeegan.${PRODUCT_NAME}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_VERSION = 3.0;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
 			name = Debug;
@@ -556,6 +562,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
 			name = Release;

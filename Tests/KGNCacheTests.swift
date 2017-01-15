@@ -52,7 +52,7 @@ class KGNCacheTests: XCTestCase {
 
     var cache = Cache(named: "test")
 
-    func runCacheTest(forKey key: String, object: AnyObject, callback: (cacheObject: AnyObject?) -> Void) {
+    func runCacheTest(forKey key: String, object: AnyObject, callback: @escaping (_ cacheObject: AnyObject?) -> Void) {
         let setObjectExpectation = self.expectation(description: "\(key).\(object).setObject")
         self.cache.set(object: object, forKey: key) { location in
             XCTAssertEqual(location, CacheLocation.disk)
@@ -61,7 +61,7 @@ class KGNCacheTests: XCTestCase {
 
         let objectForKeyExpectation = self.expectation(description: "\(key).\(object).objectForKey")
         self.cache.object(forKey: key) { [weak self] cacheObject, location in
-            callback(cacheObject: cacheObject)
+            callback(cacheObject)
             self?.cache.removeObject(forKey: key)
             objectForKeyExpectation.fulfill()
         }
@@ -85,31 +85,31 @@ class KGNCacheTests: XCTestCase {
 
     func testInt() {
         let negative = -35
-        self.runCacheTest(forKey: #function, object: negative) {
+        self.runCacheTest(forKey: #function, object: negative as AnyObject) {
             XCTAssertNotEqual($0 as? Int, 12)
             XCTAssertEqual($0 as? Int, negative)
         }
 
         let zero = 0
-        self.runCacheTest(forKey: #function, object: zero) {
+        self.runCacheTest(forKey: #function, object: zero as AnyObject) {
             XCTAssertNotEqual($0 as? Int, 12)
             XCTAssertEqual($0 as? Int, zero)
         }
 
         let seven = 7
-        self.runCacheTest(forKey: #function, object: seven) {
+        self.runCacheTest(forKey: #function, object: seven as AnyObject) {
             XCTAssertNotEqual($0 as? Int, 12)
             XCTAssertEqual($0 as? Int, seven)
         }
 
         let three = 432
-        self.runCacheTest(forKey: #function, object: three) {
+        self.runCacheTest(forKey: #function, object: three as AnyObject) {
             XCTAssertNotEqual($0 as? Int, 12)
             XCTAssertEqual($0 as? Int, three)
         }
 
         let six = 100_000
-        self.runCacheTest(forKey: #function, object: six) {
+        self.runCacheTest(forKey: #function, object: six as AnyObject) {
             XCTAssertNotEqual($0 as? Int, 12)
             XCTAssertEqual($0 as? Int, six)
         }
@@ -117,25 +117,25 @@ class KGNCacheTests: XCTestCase {
 
     func testDouble() {
         let zero: Double = 0
-        self.runCacheTest(forKey: #function, object: zero) {
+        self.runCacheTest(forKey: #function, object: zero as AnyObject) {
             XCTAssertNotEqual($0 as? Double, 12)
             XCTAssertEqual($0 as? Double, zero)
         }
 
         let pi: Double = 3.14
-        self.runCacheTest(forKey: #function, object: pi) {
+        self.runCacheTest(forKey: #function, object: pi as AnyObject) {
             XCTAssertNotEqual($0 as? Double, 12)
             XCTAssertEqual($0 as? Double, pi)
         }
 
         let three: Double = 423.534
-        self.runCacheTest(forKey: #function, object: three) {
+        self.runCacheTest(forKey: #function, object: three as AnyObject) {
             XCTAssertNotEqual($0 as? Double, 12)
             XCTAssertEqual($0 as? Double, three)
         }
 
         let six: Double = 23423.542434
-        self.runCacheTest(forKey: #function, object: six) {
+        self.runCacheTest(forKey: #function, object: six as AnyObject) {
             XCTAssertNotEqual($0 as? Double, 12)
             XCTAssertEqual($0 as? Double, six)
         }
@@ -143,19 +143,19 @@ class KGNCacheTests: XCTestCase {
 
     func testString() {
         let blank = ""
-        self.runCacheTest(forKey: #function, object: blank) {
+        self.runCacheTest(forKey: #function, object: blank as AnyObject) {
             XCTAssertNotEqual($0 as? String, "something")
             XCTAssertEqual($0 as? String, blank)
         }
 
         let name = "Steve Jobs"
-        self.runCacheTest(forKey: #function, object: name) {
+        self.runCacheTest(forKey: #function, object: name as AnyObject) {
             XCTAssertNotEqual($0 as? String, "something")
             XCTAssertEqual($0 as? String, name)
         }
 
         let sentence = "The quick brown fox jumps over the lazy dog"
-        self.runCacheTest(forKey: #function, object: sentence) {
+        self.runCacheTest(forKey: #function, object: sentence as AnyObject) {
             XCTAssertNotEqual($0 as? String, "something")
             XCTAssertEqual($0 as? String, sentence)
         }
@@ -173,18 +173,18 @@ class KGNCacheTests: XCTestCase {
 
     func testArray() {
         let ints = [1, 2, 3]
-        self.runCacheTest(forKey: #function, object: ints) {
+        self.runCacheTest(forKey: #function, object: ints as AnyObject) {
             XCTAssertNotEqual($0 as! [Int], [])
             XCTAssertEqual($0 as! [Int], ints)
         }
 
         let doubles = [1.1, 2.2, 3.3]
-        self.runCacheTest(forKey: #function, object: doubles) {
+        self.runCacheTest(forKey: #function, object: doubles as AnyObject) {
             XCTAssertEqual($0 as! [Double], doubles)
         }
 
         let strings = ["this", "is", "a", "test"]
-        self.runCacheTest(forKey: #function, object: strings) {
+        self.runCacheTest(forKey: #function, object: strings as AnyObject) {
             XCTAssertEqual($0 as! [String], strings)
         }
     }
@@ -196,7 +196,7 @@ class KGNCacheTests: XCTestCase {
         let delay = 1
         var dateComponents = DateComponents()
         dateComponents.second = delay
-        self.cache.set(object: one, forKey: key, expires: dateComponents)
+        self.cache.set(object: one as AnyObject, forKey: key, expires: dateComponents)
 
         let expectation1 = self.expectation(description: "\(#function)1")
         self.cache.object(forKey: key) { object, location in
@@ -218,7 +218,7 @@ class KGNCacheTests: XCTestCase {
     func testClearCache() {
         let key = "hello"
         let value = "Hello World"
-        self.cache.set(object: value, forKey: key)
+        self.cache.set(object: value as AnyObject, forKey: key)
         
         let expectation1 = self.expectation(description: "\(#function)1")
         self.cache.object(forKey: key) { object, location in
