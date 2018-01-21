@@ -9,7 +9,7 @@
 import Foundation
 import Crypto
 
-private class CacheObject: NSObject, NSCoding {
+@objc(KGN) private class CacheObject: NSObject, NSCoding {
     var key: String!
     var object: AnyObject!
 
